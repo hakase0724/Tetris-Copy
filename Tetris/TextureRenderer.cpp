@@ -83,7 +83,6 @@ void TextureRenderer::Render()
 	mDXManager->OMSetBlendState(mIsAlphaBlending);
 	//•`‰æ
 	mDeviceContext->DrawIndexed(mDrawNum, 0, 0);
-	//mDeviceContext->DrawIndexedInstanced(mDrawNum,1,0,0,0);
 }
 
 void TextureRenderer::Exit()

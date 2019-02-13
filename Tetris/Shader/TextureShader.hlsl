@@ -12,7 +12,6 @@ struct VS_INPUT
 {
     float4 Pos : POSITION;
     float2 Tex : TEXCOORD;
-    uint InstanceId : SV_InstanceID; // インスタンスＩＤ
 };
 
 // 頂点シェーダから出力される構造体

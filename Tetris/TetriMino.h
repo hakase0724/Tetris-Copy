@@ -10,32 +10,49 @@ namespace MyDirectX
 	public:
 		TetriMino(FieldManager* field);
 		~TetriMino() {};
+		//初期化
+		void Start();
+		//フレーム開始時の操作
+		void TetriMinoPreUpdate();
+		//テトリミノの更新
+		void TetriMinoUpdate();
+		//テトリミノを移動させる
+		//重複していた場合逆方向に移動させる
+		//rowMove = 行移動量
+		//columnMove = 列移動量
+		bool MoveTetriMino(int rowMove, int columnMove);
+		//右回転
+		bool RightRotation();
+		//左回転
+		bool LeftRotation();
 		//プレイヤーが操作するテトリミノをセットする
 		//row = 行番号
 		//column = 列番号
 		//type = 形
-		//color = 色
-		void TetriMinoPreUpdate();
-		void TetriMinoUpdate();
-		bool MoveTetriMino(int rowMove, int columnMove);
-		bool RightRotation();
-		bool LeftRotation();
 		void SetPlayerTetriMino(int row, int column,TetriMinoType type);
+		//今のテトリミノの形を返す
 		TetriMinoType GetTetriMinoType() { return mType; }
+		//テトリミノを消す
 		void ErasePiece() { mFieldManager->ErasePiece(); }
+		//着地フラグをセットする
 		void SetIsLanding(bool isLanding) { mIsLanding = isLanding; }
+		//次のテトリミノを出すか
 		bool GetIsNext() { return mIsNext; }
+		//ゲームオーバーか
+		bool GetIsGameOver() { return mIsGameOver; }
 	private:
+		//ピースの位置を記憶
+		void MemoryPrePiecePosition();
 		//回転状態列挙体の要素数
 		const int ROTATIONSTATENUM = 4;
 		//中心座標をもとに各ピースの座標を計算する
 		void CalcPiecePosition();
+		void CalcGhostPosition();
 		//重複しているか
 		bool IsDuplication();
-		//現在保有しているピースの上下左右の最大
-		PiecePosition mMinPosition;
-		//現在保有しているピースの上下左右の最小
-		PiecePosition mMaxPosition;
+		bool IsGhostDuplication();
+		//着地しているか
+		bool IsLanding();
 		//盤面
 		FieldManager* mFieldManager;
 		//形
@@ -51,11 +68,17 @@ namespace MyDirectX
 		PiecePosition mPiecePositions[4];
 		//フレーム開始時のピースの位置
 		PiecePosition mPrePiecePositions[4];
+		PiecePosition mGhostPositions[4];
 		//着地しているか
 		bool mIsLanding = false;
+		//着地経過フレーム
 		int mLandingFrame = 0;
-		int mLandingJudgeFrame = 60;
+		//着地して固定されるまでのフレーム数
+		int mLandingJudgeFrame = 30;
+		//次のテトリミノを出すか
 		bool mIsNext = false;
+		//ゲームオーバー判定
+		bool mIsGameOver = false;
 	};
 }
 

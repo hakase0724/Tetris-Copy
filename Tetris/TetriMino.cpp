@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "TetriMino.h"
 #include <algorithm>
+
 using namespace MyDirectX;
 TetriMino::TetriMino(FieldManager* field)
 {
@@ -9,8 +10,21 @@ TetriMino::TetriMino(FieldManager* field)
 	mPreRotationState = mRotationState;
 }
 
+void TetriMino::Start()
+{
+	mIsLanding = false;
+	mIsNext = false;
+	mIsGameOver = false;
+	mLandingFrame = 0;
+}
+
 void TetriMino::TetriMinoPreUpdate()
 {
+	//次出すなら何もしない
+	if (mIsNext) return;
+	//着地判定
+	mIsLanding = IsLanding();
+	//着地していれば
 	if(mIsLanding)
 	{
 		mLandingFrame++;
@@ -27,18 +41,23 @@ void TetriMino::TetriMinoPreUpdate()
 		mIsNext = false;
 		mLandingFrame = 0;
 	}
-	for(int i = 0;i < 4;i++)
-	{
-		mPrePiecePositions[i] = mPiecePositions[i];
-	}
+	MemoryPrePiecePosition();
 }
 
 void TetriMino::TetriMinoUpdate()
 {
+	CalcGhostPosition();
+	mFieldManager->ErasePiece(Ghost);
+	for (auto ghostPos : mGhostPositions)
+	{
+		mFieldManager->UpdatePiece(ghostPos.x, ghostPos.y, Ghost, mColor);
+	}
+	//開始時位置のピースを消去
 	for(auto piecePos:mPrePiecePositions)
 	{
 		mFieldManager->ErasePiece(piecePos.x, piecePos.y);
 	}
+	//現在位置のピースを表示
 	for (auto piecePos : mPiecePositions)
 	{
 		mFieldManager->UpdatePiece(piecePos.x, piecePos.y, PlayerControll, mColor);
@@ -88,6 +107,15 @@ bool TetriMino::LeftRotation()
 		return false;
 	}
 	else return true;
+}
+
+void TetriMino::MemoryPrePiecePosition()
+{
+	//フレーム開始時の位置を記憶
+	for (int i = 0; i < 4; i++)
+	{
+		mPrePiecePositions[i] = mPiecePositions[i];
+	}
 }
 
 void TetriMino::CalcPiecePosition()
@@ -484,28 +512,66 @@ void TetriMino::CalcPiecePosition()
 	}
 	//回転状態を更新
 	mPreRotationState = mRotationState;
-	//現在のピースの上下左右の最大最小を求める
-	mMinPosition = mPiecePositions[0];
-	mMaxPosition = mPiecePositions[0];
-	for (auto piecePos : mPiecePositions)
+}
+
+void TetriMino::CalcGhostPosition()
+{
+	for(int i = 0; i < 4;i++)
 	{
-		if (mMinPosition.x > piecePos.x) mMinPosition.x = piecePos.x;
-		if (mMinPosition.y > piecePos.y) mMinPosition.y = piecePos.y;
-		if (mMaxPosition.x < piecePos.x) mMaxPosition.x = piecePos.x;
-		if (mMaxPosition.y < piecePos.y) mMaxPosition.y = piecePos.y;
+		mGhostPositions[i] = mPiecePositions[i];
 	}
+	while(!IsGhostDuplication())
+	{
+		for(int i = 0;i < 4;i++)
+		{
+			mGhostPositions[i].y -= 1;
+		}
+	}
+	for (int i = 0; i < 4; i++)
+	{
+		mGhostPositions[i].y += 1;
+	}
+
 }
 
 bool TetriMino::IsDuplication()
 {
-	for(auto piece:mPiecePositions)
+	for(int i = 0;i < 4;i++)
 	{
-		auto state = mFieldManager->GetPieceState(piece.x, piece.y);
+		auto state = mFieldManager->GetPieceState(mPiecePositions[i].x, mPiecePositions[i].y);
 		//プレイヤーが操作するピースだったら何もせず次へ
 		if (state == PlayerControll) continue;
+		if (state == Ghost) continue;
 		//空白でなければ重複している
-		if (state != Space)
-			return true;
+		if (state != Space) return true;
+	}
+	return false;
+}
+
+bool TetriMino::IsGhostDuplication()
+{
+	for (int i = 0; i < 4; i++)
+	{
+		auto state = mFieldManager->GetPieceState(mGhostPositions[i].x, mGhostPositions[i].y);
+		//プレイヤーが操作するピースだったら何もせず次へ
+		if (state == PlayerControll) continue;
+		if (state == Ghost) continue;
+		//空白でなければ重複している
+		if (state != Space) return true;
+	}
+	return false;
+}
+
+bool TetriMino::IsLanding()
+{
+	for (auto piece : mPiecePositions)
+	{
+		auto state = mFieldManager->GetPieceState(piece.x, piece.y - 1);
+		//プレイヤーが操作するピースだったら何もせず次へ
+		if (state == PlayerControll) continue;
+		if (state == Ghost) continue;
+		//空白でなければ重複している
+		if (state != Space) return true;
 	}
 	return false;
 }
@@ -549,5 +615,16 @@ void TetriMino::SetPlayerTetriMino(int row, int column, TetriMinoType type)
 	mPreRotationState = A;
 	//ピースの位置計算
 	CalcPiecePosition();
-	TetriMinoPreUpdate();
+	if (IsDuplication()) 
+	{
+		mPiecePositions[0].y += 1;
+		CalcPiecePosition();
+		if (IsDuplication())
+		{
+			mIsGameOver = true;
+			return;
+		}
+	}
+	mIsNext = false;
+	MemoryPrePiecePosition();
 }

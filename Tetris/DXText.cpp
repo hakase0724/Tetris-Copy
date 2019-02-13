@@ -32,7 +32,7 @@ void DXText::UpdateText(const wchar_t * texts)
 	//文字更新
 	for (int i = 0; i < size; i++)
 	{
-		mRenderers[i]->CreateText(texts, (float)i * offset);
+		mRenderers[i]->CreateText(texts, (float)i * offset,0.0f,const_cast<WCHAR*>(mFont.c_str()));
 		texts++;
 	}
 	//余ってるコンポーネントを空白にする
@@ -40,7 +40,7 @@ void DXText::UpdateText(const wchar_t * texts)
 	{
 		for (int i = size; i < size + abs((int)addRendererNum); i++)
 		{
-			mRenderers[i]->CreateText(L" ", (float)i * offset);
+			mRenderers[i]->CreateText(L" ", (float)i * offset, 0.0f, const_cast<WCHAR*>(mFont.c_str()));
 		}
 	}
 }

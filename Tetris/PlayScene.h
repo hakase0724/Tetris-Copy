@@ -6,6 +6,8 @@
 #include "FieldManager.h"
 #include "TetriMino.h"
 #include "TetriMinoController.h"
+#include "ScoreManager.h"
+#include "TetriMinoNext.h"
 
 using namespace MyObservarPattern;
 
@@ -38,6 +40,8 @@ namespace MyDirectX
 		//盤面操作
 		std::unique_ptr<TetriMinoController> mTetriMinoController;
 		std::unique_ptr<TetriMino> mTetriMino;
+		std::unique_ptr<ScoreManager> mScoreManager;
+		std::unique_ptr<TetriMinoNext> mNext;
 		//エイリアステンプレートを使って名前を短縮
 		using Property = ReactiveProperty<double>;
 		//FPS表示に使う変数

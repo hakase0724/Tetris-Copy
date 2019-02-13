@@ -2,6 +2,7 @@
 #include "DXRenderDataPool.h"
 #include "WICTextureLoader.h"
 #include "WICTextureLoader.cpp"
+#include <Shlwapi.h>
 
 using namespace MyDirectX;
 
@@ -64,17 +65,18 @@ TEXTURE_DATA * DXRenderDataPool::GetFontTexture(wchar_t * text, WCHAR* fontName)
 	if (pReturn != nullptr) return pReturn;
 
 	auto pData = std::make_unique<TEXTURE_DATA>();
+
 	// フォントハンドルの生成
 	int fontSize = 64;
 	int fontWeight = 1000;
 	LOGFONT lf =
 	{
-		fontSize, 0, 0, 0, fontWeight, 0, 0, 0,
+		fontSize, 0, 0, 0, 0, 0, 0, 0,
 		SHIFTJIS_CHARSET, OUT_TT_ONLY_PRECIS, CLIP_DEFAULT_PRECIS,
-		PROOF_QUALITY, DEFAULT_PITCH | FF_MODERN,
+		PROOF_QUALITY, FIXED_PITCH | FF_MODERN,
 		*fontName
 	};
-	HFONT hFont = CreateFontIndirectW(&lf);
+	HFONT hFont = CreateFontIndirect(&lf);
 
 	// 現在のウィンドウに適用
 	// デバイスにフォントを持たせないとGetGlyphOutline関数はエラーとなる

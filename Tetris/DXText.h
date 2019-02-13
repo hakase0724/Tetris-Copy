@@ -14,6 +14,7 @@ namespace MyDirectX
 		void UpdateText(const wchar_t* texts);
 	private:
 		std::vector<TextRenderer*> mRenderers;
+		std::wstring mFont = _T("MS P–¾’©");
 	};
 }
 

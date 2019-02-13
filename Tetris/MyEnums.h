@@ -23,7 +23,8 @@ namespace MyDirectX
 		Space,
 		PlayerControll,
 		FieldLock,
-		Wall
+		Wall,
+		Ghost
 	};
 
 	enum PieceColor

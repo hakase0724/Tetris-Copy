@@ -4,10 +4,51 @@
 #include "DXTexture.h"
 #include "CommonValues.h"
 #include <sstream>
+#include <iomanip>
+
 using namespace MyDirectX;
 FieldManager::FieldManager(Scene* scene)
 {
 	mScene = scene;
+
+	mLevelUI = mScene->Instantiate();
+	mLevelUIText = mLevelUI->AddComponent<DXText>();
+	auto levelUITransform = mLevelUI->GetTransform();
+	levelUITransform->Position = DirectX::XMFLOAT3(1.0f, 0.15f, -1.1f);
+	levelUITransform->Scale = DirectX::XMFLOAT3(0.07f, 0.07f, 1.0f);
+
+	mLevelRP = 
+		std::unique_ptr<ReactiveProperty<int>, Deleter>
+		(new ReactiveProperty<int>(),Deleter());
+	mLevelRP->Subscribe
+	(
+	[&](int value)->void 
+	{
+		std::wostringstream wos;
+		wos << std::setw(8) << value;
+		mLevelUIText->UpdateText(wos.str().c_str());
+	}
+	);
+
+	mEraseLineCountUI = mScene->Instantiate();
+	mEraseLineCountUIText = mEraseLineCountUI->AddComponent<DXText>();
+	auto eraseLineCountUITransform = mEraseLineCountUI->GetTransform();
+	eraseLineCountUITransform->Position = DirectX::XMFLOAT3(1.0f, 0.42f, -1.1f);
+	eraseLineCountUITransform->Scale = DirectX::XMFLOAT3(0.07f, 0.07f, 1.0f);
+
+	mEraseLineCountRP =
+		std::unique_ptr<ReactiveProperty<int>, Deleter>
+		(new ReactiveProperty<int>(), Deleter());
+	mEraseLineCountRP->Subscribe
+	(
+	[&](int value)->void
+	{
+		std::wstringstream wos;
+		wos << std::setw(8) << value;
+		mEraseLineCountUIText->UpdateText(wos.str().c_str());
+	}
+	);
+
 	//îzóÒÇÃèâä˙âª
 	for (int i = 0; i < ROWNUM; i++)
 	{
@@ -22,6 +63,7 @@ FieldManager::FieldManager(Scene* scene)
 			pieceTransform->Scale = DirectX::XMFLOAT3(0.1f, 0.1f, 1.0f);
 			auto pieceCom = piece->AddComponent<Piece>();
 			piece->InitializeComponent();
+			pieceCom->SetDebugFlg(false);
 			pieces.push_back(pieceCom);
 			counts.push_back(0);
 		}
@@ -66,7 +108,17 @@ void FieldManager::CheckErase()
 		}
 	}
 	//è¡ãéÇµÇƒÇ¢ÇÍÇŒóéâ∫èàóùÇçsÇ§
-	if (!mEraseLine.empty()) PieceDrop();
+	if (!mEraseLine.empty()) 
+	{
+		PieceDrop();
+		*mEraseLineCountRP + mEraseLine.size();
+		if(mEraseLineCountRP->GetValue() / 10 == mLevelRP->GetValue())
+		{
+			*mLevelRP + 1;
+			mFreeFallFrame = 60 - (mLevelRP->GetValue() * 10);
+			if (mFreeFallFrame <= 0) mFreeFallFrame = 1;
+		}
+	}
 }
 
 void FieldManager::ErasePiece(int i, int j)
@@ -74,18 +126,23 @@ void FieldManager::ErasePiece(int i, int j)
 	mPieces[i][j]->Erase();
 }
 
-void FieldManager::ErasePiece()
+void FieldManager::ErasePiece(PieceState state)
 {
 	for(auto pieces:mPieces)
 	{
 		for(auto piece:pieces)
 		{
-			if(piece->GetPieceState() == PlayerControll)
+			if(piece->GetPieceState() == state)
 			{
 				piece->Erase();
 			}
 		}
 	}
+}
+
+int FieldManager::GetEraseScore()
+{
+	return mEraseLine.size() * 100;
 }
 
 void FieldManager::PieceDrop()
@@ -128,28 +185,10 @@ void FieldManager::Start()
 			mPieces[i][j]->SetPieceState(Space);
 		}
 	}
-}
-
-void FieldManager::AllPieceEnable()
-{
-	for(int i = 0;i < ROWNUM;i++)
-	{
-		for(int j = 0;j < COLUMNNUM;j++)
-		{
-			UpdatePiece(i, j, PlayerControll, Red);
-		}
-	}
-}
-
-void FieldManager::AllPieceDisable()
-{
-	for (int i = 0; i < ROWNUM; i++)
-	{
-		for (int j = 0; j < COLUMNNUM; j++)
-		{
-			UpdatePiece(i, j, Space, Red);
-		}
-	}
+	mLevelUI->SetEnable(true);
+	mEraseLineCountUI->SetEnable(true);
+	*mLevelRP = 1;
+	*mEraseLineCountRP = 0;
 }
 
 void FieldManager::LockPiece()

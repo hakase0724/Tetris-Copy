@@ -2,6 +2,8 @@
 #include "IComponent.h"
 #include "MyEnums.h"
 #include "DXTexture.h"
+#include "DXText.h"
+
 namespace MyDirectX
 {
 	class Piece :public Component
@@ -13,14 +15,18 @@ namespace MyDirectX
 		virtual void Initialize() override;
 		void SetPieceState(PieceState state);
 		void SetPieceColor(PieceColor color);
+		void SetDebugFlg(bool flg);
 		PieceState GetPieceState() { return mState; }
 		PieceColor GetPieceColor() { return mColor; }
 		void Erase();
 	private:
+		DXGameObject* mDebugTextObject;
+		DXText* mDebugText;
 		DXTexture* mTexture;
 		TextureRenderer* mRenderer;
 		PieceState mState;
 		PieceColor mColor;
+		COLOR mRenderingColor;
 		//各色のテクスチャパス
 		std::wstring mRedTexturePath;
 		std::wstring mBlueTexturePath;
@@ -30,6 +36,7 @@ namespace MyDirectX
 		std::wstring mPurpleTexturePath;
 		std::wstring mLightBlueTexturePath;
 		std::wstring mPieceColorPath;
+		bool mIsDebug = true;
 	};
 }
 

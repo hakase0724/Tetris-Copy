@@ -2,10 +2,11 @@
 #include "TetriMinoMove.h"
 
 using namespace MyDirectX;
-TetriMinoMove::TetriMinoMove(DXResourceManager* manager, TetriMino* tetrimino)
+TetriMinoMove::TetriMinoMove(DXResourceManager* manager, TetriMino* tetrimino, FieldManager* fieldManager)
 {
 	mManager = manager;
 	mTetriMino = tetrimino;
+	mFieldManager = fieldManager;
 }
 
 void TetriMinoMove::Start()
@@ -16,12 +17,13 @@ void TetriMinoMove::Start()
 void TetriMinoMove::Update()
 {
 	mFrameCount++;
+	mMoveScore = 0;
 	if(mFrameCount % mFreeFallCount == 0)
 	{
 		mFrameCount = 0;
 		auto isFall = mTetriMino->MoveTetriMino(0, -1);
-		if (!isFall) mTetriMino->SetIsLanding(true);
-		else mTetriMino->SetIsLanding(false);
+		//‚‘¬—Ž‰º’†‚©‚Â—Ž‚¿‚ê‚½‚ç
+		if (mIsSoftDrop && isFall) mMoveScore++;
 	}
 	if (mManager->GetKeyDown(DIK_LEFTARROW))
 	{
@@ -33,14 +35,19 @@ void TetriMinoMove::Update()
 	}
 	if (mManager->GetKeyDown(DIK_UPARROW))
 	{
-		while(mTetriMino->MoveTetriMino(0,-1)){}
+		while(mTetriMino->MoveTetriMino(0,-1))
+		{
+			mMoveScore++;
+		}
 	}
 	if (mManager->GetKey(DIK_DOWNARROW))
 	{
-		mFreeFallCount = 5;
+		mFreeFallCount = 2;
+		mIsSoftDrop = true;
 	}
 	else
 	{
-		mFreeFallCount = 60;
+		mFreeFallCount = mFieldManager->GetFreeFallFrame();
+		mIsSoftDrop = false;
 	}
 }

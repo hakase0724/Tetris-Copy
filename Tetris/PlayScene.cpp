@@ -3,13 +3,17 @@
 #include <DirectXMath.h>
 #include <sstream>
 #include <random>
+#include <iostream>
+#include <iomanip>
 
 using namespace MyDirectX;
 
 void PlayScene::Init()
 {
 	mFieldManager = std::make_unique<FieldManager>(this);
-	mTetriMinoController = std::make_unique<TetriMinoController>(mDXRescourceManager,mFieldManager.get());
+	mScoreManager = std::make_unique<ScoreManager>(this);
+	mNext = std::make_unique<TetriMinoNext>(this);
+	mTetriMinoController = std::make_unique<TetriMinoController>(mDXRescourceManager,mFieldManager.get(),this);
 	CreateUIItem();
 	//全てのオブジェクトの初期位置を設定する
 	for(auto &game: mGameObjectsList)
@@ -31,8 +35,10 @@ void PlayScene::SceneStart()
 		game->SetEnable(true);
 	}
 	mFieldManager->Start();
+	mScoreManager->Start();
+	mNext->Start();
 	mTetriMinoController->Start();
-	mTetriMinoController->SetTetriMino(5, 20, I);
+	mTetriMinoController->SetTetriMino(5, 20, mNext->GetNextTetriMino());
 	//曲再生
 	//mDXRescourceManager->GetBGMDXSound()->Play();
 }
@@ -48,13 +54,18 @@ void PlayScene::SceneUpdate()
 	}
 	mTetriMinoController->PreUpdate();
 	auto isPlaying = mTetriMinoController->Update();
+	auto addScore = mTetriMinoController->GetMoveScore();
 	if(!isPlaying)
-	{
+	{		
+		//ピースを盤面に固定
 		mFieldManager->LockPiece();
-		auto type = static_cast<TetriMinoType>(GetRandRange(0, 6));
-		mTetriMinoController->SetTetriMino(5, 20, type);
-	}
-	mFieldManager->CheckErase();
+		//消去
+		mFieldManager->CheckErase();
+		//消去した時のスコアを加算
+		addScore += mFieldManager->GetEraseScore();
+		mTetriMinoController->SetTetriMino(5, 20, mNext->GetNextTetriMino());
+	}	
+	mScoreManager->AddScore(addScore);
 }
 
 void PlayScene::SceneEnd()
@@ -90,7 +101,8 @@ void PlayScene::SceneEnd()
 
 bool PlayScene::IsSceneEnd()
 {
-	if (mDXRescourceManager->GetKeyDown(DIK_RETURN)) return true;
+	if (mTetriMinoController->IsGameOver()) return true;
+	//if (mDXRescourceManager->GetKeyDown(DIK_RETURN)) return true;
 	return false;
 }
 

@@ -187,6 +187,7 @@
     <ClInclude Include="ReactiveProperty.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="ScoreManager.h" />
     <ClInclude Include="ShaderFactory.h" />
     <ClInclude Include="ShaderInfo.h" />
     <ClInclude Include="stdafx.h" />
@@ -194,8 +195,11 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TetriMino.h" />
     <ClInclude Include="TetriMinoController.h" />
+    <ClInclude Include="TetriMinoGhost.h" />
     <ClInclude Include="TetriMinoHold.h" />
     <ClInclude Include="TetriMinoMove.h" />
+    <ClInclude Include="TetriMinoNext.h" />
+    <ClInclude Include="TetriMinoNextUI.h" />
     <ClInclude Include="TetriMinoRotation.h" />
     <ClInclude Include="Tetris.h" />
     <ClInclude Include="TextRenderer.h" />
@@ -229,6 +233,7 @@
     <ClCompile Include="Piece.cpp" />
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="ScoreManager.cpp" />
     <ClCompile Include="ShaderFactory.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -238,8 +243,11 @@
     </ClCompile>
     <ClCompile Include="TetriMino.cpp" />
     <ClCompile Include="TetriMinoController.cpp" />
+    <ClCompile Include="TetriMinoGhost.cpp" />
     <ClCompile Include="TetriMinoHold.cpp" />
     <ClCompile Include="TetriMinoMove.cpp" />
+    <ClCompile Include="TetriMinoNext.cpp" />
+    <ClCompile Include="TetriMinoNextUI.cpp" />
     <ClCompile Include="TetriMinoRotation.cpp" />
     <ClCompile Include="Tetris.cpp" />
     <ClCompile Include="TextRenderer.cpp" />
