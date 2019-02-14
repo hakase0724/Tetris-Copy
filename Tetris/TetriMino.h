@@ -21,10 +21,13 @@ namespace MyDirectX
 		//rowMove = 行移動量
 		//columnMove = 列移動量
 		bool MoveTetriMino(int rowMove, int columnMove);
+		bool MoveTetriMinoSafe(int rowMove, int columnMove);
 		//右回転
 		bool RightRotation();
+		bool RightRotationSafe();
 		//左回転
 		bool LeftRotation();
+		bool LeftRotationSafe();
 		//プレイヤーが操作するテトリミノをセットする
 		//row = 行番号
 		//column = 列番号
@@ -40,6 +43,10 @@ namespace MyDirectX
 		bool GetIsNext() { return mIsNext; }
 		//ゲームオーバーか
 		bool GetIsGameOver() { return mIsGameOver; }
+		//次へ行く
+		void GoNext();
+		//今の回転状態を返す
+		TetriMinoRotationState GetRotationState() { return mRotationState; }
 	private:
 		//ピースの位置を記憶
 		void MemoryPrePiecePosition();

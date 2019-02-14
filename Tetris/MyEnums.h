@@ -56,4 +56,14 @@ namespace MyDirectX
 		C,
 		D,
 	};
+
+	enum SuperRotationState
+	{
+		Zero,
+		One,
+		Two,
+		Three,
+		Four
+	};
+
 }

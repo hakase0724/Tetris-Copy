@@ -52,6 +52,10 @@ void PlayScene::SceneUpdate()
 	{
 		*mFPSRP = mDXRescourceManager->GetFPS();
 	}
+	if(mDXRescourceManager->GetKeyDown(DIK_NUMPAD0))
+	{
+		mFieldManager->ChangeDebugMode();
+	}
 	mTetriMinoController->PreUpdate();
 	auto isPlaying = mTetriMinoController->Update();
 	auto addScore = mTetriMinoController->GetMoveScore();

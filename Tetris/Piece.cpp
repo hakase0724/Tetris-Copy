@@ -38,34 +38,22 @@ void Piece::SetPieceState(PieceState state)
 	case Space:
 		mGameObject->SetEnable(false);
 		mRenderer->SetEnable(false);
-		if (mIsDebug) 
-		{
-			mDebugText->UpdateText(_T("S"));
-		}
+		mDebugText->UpdateText(_T("S"));
 		break;
 	case PlayerControll:
 		mGameObject->SetEnable(true);
 		mRenderer->SetEnable(true);
-		if (mIsDebug)
-		{
-			mDebugText->UpdateText(_T("P"));
-		}
+		mDebugText->UpdateText(_T("P"));
 		break;
 	case FieldLock:
 		mGameObject->SetEnable(true);
 		mRenderer->SetEnable(true);
-		if (mIsDebug)
-		{
-			mDebugText->UpdateText(_T("F"));
-		}
+		mDebugText->UpdateText(_T("F"));
 		break;
 	case Wall:
 		mGameObject->SetEnable(true);
 		mRenderer->SetEnable(true);
-		if (mIsDebug)
-		{
-			mDebugText->UpdateText(_T("W"));
-		}
+		mDebugText->UpdateText(_T("W"));
 		break;
 	case Ghost:
 		mGameObject->SetEnable(true);
@@ -73,10 +61,7 @@ void Piece::SetPieceState(PieceState state)
 		mRenderer->SetAlphaBlendingFlg(true);
 		mRenderingColor.a = 0.5f;
 		mRenderer->SetColor(mRenderingColor);
-		if (mIsDebug)
-		{
-			mDebugText->UpdateText(_T("G"));
-		}
+		mDebugText->UpdateText(_T("G"));
 		break;
 	default:
 		break;

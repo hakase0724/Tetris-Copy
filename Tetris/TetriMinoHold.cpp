@@ -34,6 +34,8 @@ void TetriMinoHold::Update()
 
 void TetriMinoHold::Hold()
 {
+	//ƒƒbƒN‚³‚ê‚Ä‚¢‚½‚ç
+	if (mIsLockHold) return;
 	mTetriMino->ErasePiece();
 	if(mIsHold)
 	{
@@ -47,4 +49,5 @@ void TetriMinoHold::Hold()
 		mIsFirstHold = true;
 	}
 	mHoldUI->SetTetriMinoType(mHoldType);
+	mIsLockHold = true;
 }

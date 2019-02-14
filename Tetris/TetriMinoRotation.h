@@ -11,8 +11,14 @@ namespace MyDirectX
 		~TetriMinoRotation() {};
 		void Update();
 	private:
+		bool IsSuperRotation();
+		bool IsSuperRotationCheck(TetriMinoRotationState preState,TetriMinoRotationState state);
+		TetriMinoRotationState mTetriMinoRotationState;
 		DXResourceManager* mManager;
 		TetriMino* mTetriMino;
+		SuperRotationState mSuperRotationState;
+		PiecePosition mMovePosition;
+		TetriMinoType mTetriMinoType;
 	};
 }
 

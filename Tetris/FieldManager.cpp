@@ -114,9 +114,22 @@ void FieldManager::CheckErase()
 		*mEraseLineCountRP + mEraseLine.size();
 		if(mEraseLineCountRP->GetValue() / 10 == mLevelRP->GetValue())
 		{
-			*mLevelRP + 1;
-			mFreeFallFrame = 60 - (mLevelRP->GetValue() * 10);
+			if(mLevelRP->GetValue() < mMaxLevel) *mLevelRP + 1;
+			mFreeFallFrame = mDefaultFreeFallFrame - (mLevelRP->GetValue() * (mDefaultFreeFallFrame / mMaxLevel));
 			if (mFreeFallFrame <= 0) mFreeFallFrame = 1;
+		}
+	}
+}
+
+void FieldManager::ChangeDebugMode()
+{
+	if (mIsDebug)mIsDebug = false;
+	else mIsDebug = true;
+	for(auto pieces:mPieces)
+	{
+		for(auto piece:pieces)
+		{
+			piece->SetDebugFlg(mIsDebug);
 		}
 	}
 }
@@ -189,6 +202,7 @@ void FieldManager::Start()
 	mEraseLineCountUI->SetEnable(true);
 	*mLevelRP = 1;
 	*mEraseLineCountRP = 0;
+	mFreeFallFrame = mDefaultFreeFallFrame;
 }
 
 void FieldManager::LockPiece()

@@ -37,6 +37,7 @@ bool TetriMinoController::Update()
 	{
 		//ˆÊ’u‚ğŠm’è‚µ•\¦
 		mTetriMino->TetriMinoUpdate();
+		mHold->UnlockHold();
 		//ˆÈŒã‚Ìˆ—‚ğ‚µ‚È‚¢
 		return false;
 	}

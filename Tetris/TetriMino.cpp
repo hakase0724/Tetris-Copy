@@ -30,9 +30,7 @@ void TetriMino::TetriMinoPreUpdate()
 		mLandingFrame++;
 		if(mLandingFrame >= mLandingJudgeFrame)
 		{
-			mIsNext = true;
-			mLandingFrame = 0;
-			mIsLanding = false;
+			GoNext();
 			return;
 		}
 	}
@@ -70,8 +68,14 @@ bool TetriMino::MoveTetriMino(int rowMove, int columnMove)
 	mPiecePositions[0].x += rowMove;
 	mPiecePositions[0].y += columnMove;
 	CalcPiecePosition();
-	//èdï°ÇµÇƒÇ¢ÇÍÇŒãtï˚å¸Ç…à⁄ìÆÇ∑ÇÈ
-	if (IsDuplication()) 
+	//èdï°ÇµÇƒÇ¢ÇÈÇ©
+	if (IsDuplication()) return false;
+	else return true;
+}
+
+bool TetriMino::MoveTetriMinoSafe(int rowMove, int columnMove)
+{
+	if (!MoveTetriMino(rowMove, columnMove)) 
 	{
 		MoveTetriMino(-rowMove, -columnMove);
 		return false;
@@ -85,8 +89,14 @@ bool TetriMino::RightRotation()
 	rotationStateNum = (++rotationStateNum) % ROTATIONSTATENUM;
 	mRotationState = static_cast<TetriMinoRotationState>(rotationStateNum);
 	CalcPiecePosition();
-	//èdï°ÇµÇƒÇ¢ÇÍÇŒãtâÒì]
-	if (IsDuplication()) 
+	//èdï°ÇµÇƒÇ¢ÇÈÇ©
+	if (IsDuplication()) return false;
+	else return true;
+}
+
+bool TetriMino::RightRotationSafe()
+{
+	if(!RightRotation())
 	{
 		LeftRotation();
 		return false;
@@ -100,13 +110,26 @@ bool TetriMino::LeftRotation()
 	rotationStateNum = (rotationStateNum + ROTATIONSTATENUM - 1) % ROTATIONSTATENUM;
 	mRotationState = static_cast<TetriMinoRotationState>(rotationStateNum);
 	CalcPiecePosition();
-	//èdï°ÇµÇƒÇ¢ÇÍÇŒãtâÒì]
-	if (IsDuplication()) 
+	//èdï°ÇµÇƒÇ¢ÇÈÇ©
+	if (IsDuplication()) return false;
+	else return true;
+}
+
+bool TetriMino::LeftRotationSafe()
+{
+	if(!LeftRotation())
 	{
 		RightRotation();
 		return false;
 	}
 	else return true;
+}
+
+void TetriMino::GoNext()
+{
+	mIsNext = true;
+	mLandingFrame = 0;
+	mIsLanding = false;
 }
 
 void TetriMino::MemoryPrePiecePosition()
@@ -405,7 +428,7 @@ void TetriMino::CalcPiecePosition()
 		}
 		break;
 		
-	case S:
+	case Z:
 		switch (mRotationState)
 		{
 		/*
@@ -456,7 +479,7 @@ void TetriMino::CalcPiecePosition()
 		}
 		break;
 
-	case Z:
+	case S:
 		switch (mRotationState)
 		{
 		/*

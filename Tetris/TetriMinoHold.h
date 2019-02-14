@@ -13,10 +13,12 @@ namespace MyDirectX
 		void Start();
 		void Update();
 		bool IsFirstHold() { return mIsFirstHold; }
+		void UnlockHold() { mIsLockHold = false; }
 	private:
 		void Hold();
 		bool mIsHold = false;
 		bool mIsFirstHold = false;
+		bool mIsLockHold = false;
 		Scene* mScene;
 		DXResourceManager* mManager;
 		TetriMino* mTetriMino;

@@ -21,24 +21,25 @@ void TetriMinoMove::Update()
 	if(mFrameCount % mFreeFallCount == 0)
 	{
 		mFrameCount = 0;
-		auto isFall = mTetriMino->MoveTetriMino(0, -1);
+		auto isFall = mTetriMino->MoveTetriMinoSafe(0, -1);
 		//‚‘¬—Ž‰º’†‚©‚Â—Ž‚¿‚ê‚½‚ç
 		if (mIsSoftDrop && isFall) mMoveScore++;
 	}
 	if (mManager->GetKeyDown(DIK_LEFTARROW))
 	{
-		mTetriMino->MoveTetriMino(1, 0);
+		mTetriMino->MoveTetriMinoSafe(1, 0);
 	}
 	if (mManager->GetKeyDown(DIK_RIGHTARROW))
 	{
-		mTetriMino->MoveTetriMino(-1, 0);
+		mTetriMino->MoveTetriMinoSafe(-1, 0);
 	}
 	if (mManager->GetKeyDown(DIK_UPARROW))
 	{
-		while(mTetriMino->MoveTetriMino(0,-1))
+		while(mTetriMino->MoveTetriMinoSafe(0,-1))
 		{
 			mMoveScore++;
 		}
+		mTetriMino->GoNext();
 	}
 	if (mManager->GetKey(DIK_DOWNARROW))
 	{

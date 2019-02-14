@@ -18,6 +18,7 @@ namespace MyDirectX
 		void LockPiece();
 		void UpdatePiece(int i, int j, PieceState state, PieceColor color);
 		void CheckErase();
+		void ChangeDebugMode();
 		void ErasePiece(int i,int j);
 		void ErasePiece(PieceState state = PlayerControll);
 		int GetFreeFallFrame() const { return mFreeFallFrame; }
@@ -36,12 +37,17 @@ namespace MyDirectX
 		std::unique_ptr<ReactiveProperty<int>, Deleter> mLevelRP;
 		std::unique_ptr<ReactiveProperty<int>, Deleter> mEraseLineCountRP;
 		int mLevel = 1;
-		int mFreeFallFrame = 60;
+		int mFreeFallFrame = mDefaultFreeFallFrame;
 		int mTotalEraseLineCount = 0;
 		DXGameObject* mLevelUI;
 		DXText* mLevelUIText;
 		DXGameObject* mEraseLineCountUI;
 		DXText* mEraseLineCountUIText;
+		bool mIsDebug = false;
+		//‰Šú—‰ºƒtƒŒ[ƒ€
+		int mDefaultFreeFallFrame = 60;
+		//Å‘åƒŒƒxƒ‹
+		int mMaxLevel = 15;
 	};
 }
 
