@@ -1,6 +1,9 @@
 #include "stdafx.h"
 #include "TetriMinoRotation.h"
 
+#include <sstream>
+#define STRING(var) #var
+
 using namespace MyDirectX;
 TetriMinoRotation::TetriMinoRotation(DXResourceManager* manager, TetriMino* tetrimino)
 {
@@ -46,66 +49,218 @@ bool TetriMinoRotation::IsSuperRotation()
 
 bool TetriMinoRotation::IsSuperRotationCheck(TetriMinoRotationState preState, TetriMinoRotationState state)
 {
+	//回転軸の移動量計算
 	if(mTetriMinoType == I)
 	{
-		return false;
-		/*switch (mSuperRotationState)
+		switch (mSuperRotationState)
 		{
 		case One:
+			mSuperRotationState = Two;
 			switch (preState)
 			{
 			case A:
+				if (state == D)
+				{
+					mMovePosition.x -= 1;
+				}
+				if (state == B)
+				{
+					mMovePosition.x -= 2;
+				}
 				break;
 			case B:
+				if (state == A)
+				{
+					mMovePosition.x += 2;
+				}
+				if (state == C)
+				{
+					mMovePosition.x += 1;
+				}
 				break;
 			case C:
+				if (state == B)
+				{
+					mMovePosition.x += 1;
+				}
+				if (state == D)
+				{
+					mMovePosition.x += 2;
+				}
 				break;
 			case D:
+				if (state == C)
+				{
+					mMovePosition.x += 1;
+				}
+				if (state == A) 
+				{
+					mMovePosition.x += 2;
+				}
 				break;
 			default:
 				break;
 			}
 			break;
 		case Two:
+			mSuperRotationState = Three;
+			mMovePosition.x = 0;
 			switch (preState)
 			{
 			case A:
+				if (state == D)
+				{
+					mMovePosition.x += 2;
+				}
+				if (state == B)
+				{
+					mMovePosition.x += 1;
+				}
 				break;
 			case B:
+				if (state == A)
+				{
+					mMovePosition.x -= 1;
+				}
+				if (state == C)
+				{
+					mMovePosition.x -= 2;
+				}
 				break;
 			case C:
+				if (state == B)
+				{
+					mMovePosition.x -= 2;
+				}
+				if (state == D)
+				{
+					mMovePosition.x -= 1;
+				}
 				break;
 			case D:
+				if (state == C)
+				{
+					mMovePosition.x -= 2;
+				}
+				if (state == A)
+				{
+					mMovePosition.x -= 1;
+				}
 				break;
 			default:
 				break;
 			}
 			break;
 		case Three:
+			mSuperRotationState = Four;
+			mMovePosition.x = 0;
 			switch (preState)
 			{
 			case A:
+				if (state == D)
+				{
+					mMovePosition.x -= 1;
+					mMovePosition.y += 2;
+				}
+				if (state == B)
+				{
+					mMovePosition.x -= 2;
+					mMovePosition.y -= 1;
+				}
 				break;
 			case B:
+				if (state == A)
+				{
+					mMovePosition.x += 2;
+					mMovePosition.y += 1;
+				}
+				if (state == C)
+				{
+					mMovePosition.x += 1;
+					mMovePosition.y += 2;
+				}
 				break;
 			case C:
+				if (state == B)
+				{
+					mMovePosition.x += 1;
+					mMovePosition.y -= 2;
+				}
+				if (state == D)
+				{
+					mMovePosition.x += 2;
+					mMovePosition.y += 1;
+				}
 				break;
 			case D:
+				if (state == C)
+				{
+					mMovePosition.x += 1;
+					mMovePosition.y -= 1;
+				}
+				if (state == A)
+				{
+					mMovePosition.x += 2;
+					mMovePosition.y -= 2;
+				}
 				break;
 			default:
 				break;
 			}
 			break;
 		case Four:
+			mSuperRotationState = End;
+			mMovePosition.x = 0;
+			mMovePosition.y = 0;
 			switch (preState)
 			{
 			case A:
+				if (state == D)
+				{
+					mMovePosition.x += 2;
+					mMovePosition.y -= 1;
+				}
+				if (state == B)
+				{
+					mMovePosition.x += 1;
+					mMovePosition.y += 2;
+				}
 				break;
 			case B:
+				if (state == A)
+				{
+					mMovePosition.x -= 1;
+					mMovePosition.y -= 2;
+				}
+				if (state == C)
+				{
+					mMovePosition.x -= 2;
+					mMovePosition.y -= 1;
+				}
 				break;
 			case C:
+				if (state == B)
+				{
+					mMovePosition.x -= 2;
+					mMovePosition.y += 1;
+				}
+				if (state == D)
+				{
+					mMovePosition.x -= 1;
+					mMovePosition.y -= 2;
+				}
 				break;
 			case D:
+				if (state == C)
+				{
+					mMovePosition.x -= 2;
+					mMovePosition.y += 2;
+				}
+				if (state == A)
+				{
+					mMovePosition.x -= 1;
+					mMovePosition.y += 1;
+				}
 				break;
 			default:
 				break;
@@ -113,7 +268,7 @@ bool TetriMinoRotation::IsSuperRotationCheck(TetriMinoRotationState preState, Te
 			break;
 		default:
 			break;
-		}*/
+		}
 	}
 	else 
 	{
@@ -196,6 +351,7 @@ bool TetriMinoRotation::IsSuperRotationCheck(TetriMinoRotationState preState, Te
 			}
 			break;
 		case Four:
+			mSuperRotationState = End;
 			switch (preState)
 			{
 			case A:
@@ -232,10 +388,19 @@ bool TetriMinoRotation::IsSuperRotationCheck(TetriMinoRotationState preState, Te
 			break;
 		}
 	}
+
 	//移動出来たらtrue
-	if (mTetriMino->MoveTetriMinoSafe(mMovePosition.x, mMovePosition.y)) return true;
+	if (mTetriMino->MoveTetriMinoSafe(mMovePosition.x, mMovePosition.y)) 
+	{
+		return true;
+	}
 	//出来ずにスーパーローテーション判定が終わればfalse
-	else if (mSuperRotationState == Four) return false;
+	else if (mSuperRotationState == End) 
+	{
+		return false;
+	}
 	//スーパーローテーション判定が残っていれば次の判定へ
 	else return IsSuperRotationCheck(preState, state);
+
+	
 }

@@ -77,8 +77,13 @@ TetriMinoType TetriMinoNext::GetNextTetriMinoType()
 	auto type = static_cast<TetriMinoType>(GetRandRange(0, 6));
 	//”z—ñ‚ª‹ó‚È‚ç‚»‚Ì‚Ü‚Ü•Ô‚·
 	if (mTypeList.empty()) return type;
-	//––”ö‚Æ”í‚Á‚Ä‚¢‚½‚çÄ’Š‘I
-	if (type == mTypeList.back())
+	auto sameTypeCount = 0;
+	for(auto listType:mTypeList)
+	{
+		if (type == listType) sameTypeCount++;
+	}
+	//2‚ÂˆÈã”í‚Á‚Ä‚¢‚½‚çÄ’Š‘I
+	if (sameTypeCount > 1)
 	{
 		type = static_cast<TetriMinoType>(GetRandRange(0, 6));
 	}

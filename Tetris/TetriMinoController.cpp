@@ -48,7 +48,6 @@ bool TetriMinoController::Update()
 	//ホールド
 	mHold->Update();
 	if (mHold->IsFirstHold()) return false;
-	
 	//位置を確定し表示
 	mTetriMino->TetriMinoUpdate();
 	return true;

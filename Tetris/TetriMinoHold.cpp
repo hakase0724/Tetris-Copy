@@ -20,6 +20,9 @@ TetriMinoHold::TetriMinoHold(DXResourceManager * manager, TetriMino * tetrimino,
 void TetriMinoHold::Start()
 {
 	mHoldUI->SetEnable(true);
+	mIsLockHold = false;
+	mIsHold = false;
+	mIsFirstHold = false;
 }
 
 void TetriMinoHold::Update()

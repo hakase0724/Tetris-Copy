@@ -321,5 +321,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Shader\TextureShader.hlsl" />
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

@@ -63,7 +63,8 @@ namespace MyDirectX
 		One,
 		Two,
 		Three,
-		Four
+		Four,
+		End
 	};
 
 }

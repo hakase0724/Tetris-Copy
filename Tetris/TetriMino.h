@@ -21,12 +21,15 @@ namespace MyDirectX
 		//rowMove = 行移動量
 		//columnMove = 列移動量
 		bool MoveTetriMino(int rowMove, int columnMove);
+		//失敗した場合逆移動する
 		bool MoveTetriMinoSafe(int rowMove, int columnMove);
 		//右回転
 		bool RightRotation();
+		//失敗した場合逆移動する
 		bool RightRotationSafe();
 		//左回転
 		bool LeftRotation();
+		//失敗した場合逆移動する
 		bool LeftRotationSafe();
 		//プレイヤーが操作するテトリミノをセットする
 		//row = 行番号
@@ -54,9 +57,11 @@ namespace MyDirectX
 		const int ROTATIONSTATENUM = 4;
 		//中心座標をもとに各ピースの座標を計算する
 		void CalcPiecePosition();
+		//ゴーストの位置計算
 		void CalcGhostPosition();
 		//重複しているか
 		bool IsDuplication();
+		//ゴーストが重複しているか
 		bool IsGhostDuplication();
 		//着地しているか
 		bool IsLanding();
@@ -75,6 +80,7 @@ namespace MyDirectX
 		PiecePosition mPiecePositions[4];
 		//フレーム開始時のピースの位置
 		PiecePosition mPrePiecePositions[4];
+		//ゴーストの位置
 		PiecePosition mGhostPositions[4];
 		//着地しているか
 		bool mIsLanding = false;

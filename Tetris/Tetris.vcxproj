@@ -264,6 +264,7 @@
     <Image Include="Tetris.ico" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram.cd" />
     <None Include="Shader\TextureShader.hlsl">
       <FileType>Document</FileType>
     </None>

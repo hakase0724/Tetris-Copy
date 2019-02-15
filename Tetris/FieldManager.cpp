@@ -74,6 +74,7 @@ FieldManager::FieldManager(Scene* scene)
 
 void FieldManager::UpdatePiece(int i, int j, PieceState state, PieceColor color)
 {
+	if (!IsWidthInTheFieldRange(i, j)) return;
 	auto piece = mPieces[i][j];
 	piece->SetPieceState(state);
 	piece->SetPieceColor(color);
@@ -136,6 +137,7 @@ void FieldManager::ChangeDebugMode()
 
 void FieldManager::ErasePiece(int i, int j)
 {
+	if (!IsWidthInTheFieldRange(i, j)) return;
 	mPieces[i][j]->Erase();
 }
 
@@ -153,9 +155,27 @@ void FieldManager::ErasePiece(PieceState state)
 	}
 }
 
+PieceState FieldManager::GetPieceState(int i, int j)
+{
+	if (IsWidthInTheFieldRange(i, j)) 
+	{
+		return mPieces[i][j]->GetPieceState();
+	}
+	else return Wall;
+}
+
 int FieldManager::GetEraseScore()
 {
 	return mEraseLine.size() * 100;
+}
+
+bool FieldManager::IsWidthInTheFieldRange(int i, int j)
+{
+	if(0 < i && i < ROWNUM - 1)
+	{
+		if (0 < j && j < COLUMNNUM) return true;
+	}
+	return false;
 }
 
 void FieldManager::PieceDrop()

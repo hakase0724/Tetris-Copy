@@ -65,9 +65,11 @@ void TetriMino::TetriMinoUpdate()
 bool TetriMino::MoveTetriMino(int rowMove, int columnMove)
 {
 	//ˆÚ“®Œã‚ÌˆÊ’u‚ðŒvŽZ
-	mPiecePositions[0].x += rowMove;
-	mPiecePositions[0].y += columnMove;
-	CalcPiecePosition();
+	for(int i = 0;i < 4;i++)
+	{
+		mPiecePositions[i].x += rowMove;
+		mPiecePositions[i].y += columnMove;
+	}
 	//d•¡‚µ‚Ä‚¢‚é‚©
 	if (IsDuplication()) return false;
 	else return true;
@@ -78,9 +80,14 @@ bool TetriMino::MoveTetriMinoSafe(int rowMove, int columnMove)
 	if (!MoveTetriMino(rowMove, columnMove)) 
 	{
 		MoveTetriMino(-rowMove, -columnMove);
+		mLandingFrame = 0;
 		return false;
 	}
-	else return true;
+	else 
+	{
+		mLandingFrame = 0;
+		return true;
+	}
 }
 
 bool TetriMino::RightRotation()
@@ -99,9 +106,14 @@ bool TetriMino::RightRotationSafe()
 	if(!RightRotation())
 	{
 		LeftRotation();
+		mLandingFrame = 0;
 		return false;
 	}
-	else return true;
+	else
+	{
+		mLandingFrame = 0;
+		return true;
+	}
 }
 
 bool TetriMino::LeftRotation()
@@ -120,9 +132,14 @@ bool TetriMino::LeftRotationSafe()
 	if(!LeftRotation())
 	{
 		RightRotation();
+		mLandingFrame = 0;
 		return false;
 	}
-	else return true;
+	else
+	{
+		mLandingFrame = 0;
+		return true;
+	}
 }
 
 void TetriMino::GoNext()
