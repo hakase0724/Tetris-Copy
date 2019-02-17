@@ -4,7 +4,6 @@
 #include "DXTexture.h"
 #include "ReactiveProperty.h"
 #include "FieldManager.h"
-#include "TetriMino.h"
 #include "TetriMinoController.h"
 #include "ScoreManager.h"
 #include "TetriMinoNext.h"
@@ -33,13 +32,14 @@ namespace MyDirectX
 		const int FPS_CHEACK_FRAME_COUNT = 60;
 		//FPS表示テキスト
 		DXText* mFPSText;
+		DXGameObject* mTspinUI;
+		DXGameObject* mTspinMiniUI;
 		//シーン開始時にアクティブにするオブジェクト
 		std::vector<DXGameObject*> mAwakeObject;
 		//フィールド管理
 		std::unique_ptr<FieldManager> mFieldManager;
 		//盤面操作
 		std::unique_ptr<TetriMinoController> mTetriMinoController;
-		std::unique_ptr<TetriMino> mTetriMino;
 		std::unique_ptr<ScoreManager> mScoreManager;
 		std::unique_ptr<TetriMinoNext> mNext;
 		//エイリアステンプレートを使って名前を短縮

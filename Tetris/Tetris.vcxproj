@@ -206,6 +206,7 @@
     <ClInclude Include="TextureMesh.h" />
     <ClInclude Include="TextureRenderer.h" />
     <ClInclude Include="TextureShader.h" />
+    <ClInclude Include="Timer.h" />
     <ClInclude Include="TitleScene.h" />
   </ItemGroup>
   <ItemGroup>

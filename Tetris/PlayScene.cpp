@@ -5,6 +5,8 @@
 #include <random>
 #include <iostream>
 #include <iomanip>
+#include <thread>
+#include <chrono>
 
 using namespace MyDirectX;
 
@@ -52,24 +54,46 @@ void PlayScene::SceneUpdate()
 	{
 		*mFPSRP = mDXRescourceManager->GetFPS();
 	}
+#if _DEBUG
 	if(mDXRescourceManager->GetKeyDown(DIK_NUMPAD0))
 	{
 		mFieldManager->ChangeDebugMode();
 	}
+#endif
 	mTetriMinoController->PreUpdate();
 	auto isPlaying = mTetriMinoController->Update();
-	auto addScore = mTetriMinoController->GetMoveScore();
+	//移動のスコアを加算する
+	mScoreManager->AddScore(mTetriMinoController->GetMoveScore());
+	//次のテトリミノを出すなら
 	if(!isPlaying)
 	{		
 		//ピースを盤面に固定
 		mFieldManager->LockPiece();
+		//Tスピン判定
+		auto isTspin = mTetriMinoController->GetIsTspin();
+		//Tスピンミニ判定
+		auto isTspinMini = mTetriMinoController->GetIsTspinMini();
+		//Tスピン成功UIの表示切替
+		if (isTspinMini)mTspinMiniUI->SetEnable(true);
+		else if (isTspin) mTspinUI->SetEnable(true);
+		else 
+		{
+			mTspinMiniUI->SetEnable(false);
+			mTspinUI->SetEnable(false);
+		}
 		//消去
 		mFieldManager->CheckErase();
+		//消したライン数
+		auto eraseLine = mFieldManager->GetEraseLineCount();
+		//現在のレベル
+		auto level = mFieldManager->GetLevel();
+		
 		//消去した時のスコアを加算
-		addScore += mFieldManager->GetEraseScore();
+		mScoreManager->AddScore(eraseLine, level, isTspin, isTspinMini);
+		//次のテトリミノを出す
 		mTetriMinoController->SetTetriMino(5, 20, mNext->GetNextTetriMino());
 	}	
-	mScoreManager->AddScore(addScore);
+	
 }
 
 void PlayScene::SceneEnd()
@@ -142,6 +166,20 @@ void PlayScene::CreateUIItem()
 	transform2->Position.y += 0.07f;
 	transform2->Position.z += 0.01f;
 	mAwakeObject.push_back(field);
+
+	mTspinUI = Instantiate();
+	auto tspinText = mTspinUI->AddComponent<DXText>();
+	auto tspinTransform = mTspinUI->GetTransform();
+	tspinTransform->Scale = DirectX::XMFLOAT3(0.07f,0.07f,1.0f);
+	tspinTransform->Position = DirectX::XMFLOAT3(-1.7f, -0.7f, -1.1f);
+	tspinText->UpdateText(_T("TSpin"));
+
+	mTspinMiniUI = Instantiate();
+	auto tspinMiniText = mTspinMiniUI->AddComponent<DXText>();
+	auto tspinMiniTransform = mTspinMiniUI->GetTransform();
+	tspinMiniTransform->Scale = DirectX::XMFLOAT3(0.07f, 0.07f, 1.0f);
+	tspinMiniTransform->Position = DirectX::XMFLOAT3(-1.7f, -0.7f, -1.1f);
+	tspinMiniText->UpdateText(_T("TSpinMini"));
 
 	//FPS表示テキスト
 	auto fps = Instantiate();

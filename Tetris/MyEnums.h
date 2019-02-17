@@ -67,4 +67,11 @@ namespace MyDirectX
 		End
 	};
 
+	enum TetriMinoAction 
+	{
+		Move,
+		Rotation
+	};
+
+
 }

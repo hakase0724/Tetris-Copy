@@ -37,6 +37,31 @@ ScoreManager::ScoreManager(Scene* scene)
 	);
 }
 
+void ScoreManager::AddScore(int eraseLineCount, int level, bool isTspin, bool isTspinMini)
+{
+	auto score = 0;
+	if (eraseLineCount == 1) 
+	{
+		score += level * cOneLine;
+		if(isTspin) score += level * cTspinSingle;
+		else if(isTspinMini) score += level * cTspinMini;
+	}
+	if (eraseLineCount == 2) 
+	{
+		score += level * cTwoLine;
+		if (isTspin) score += level * cTspinDouble;
+	}
+	if (eraseLineCount == 3) 
+	{
+		score += level * cThreeLine;
+		if (isTspin) score += level * cTspinTriple;
+	}
+	if (eraseLineCount == 4) score += level * cFourLine;
+
+	*mScoreRP + score;
+
+}
+
 void ScoreManager::Start()
 {
 	mScoreTextObject->SetEnable(true);

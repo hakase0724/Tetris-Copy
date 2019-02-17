@@ -164,11 +164,6 @@ PieceState FieldManager::GetPieceState(int i, int j)
 	else return Wall;
 }
 
-int FieldManager::GetEraseScore()
-{
-	return mEraseLine.size() * 100;
-}
-
 bool FieldManager::IsWidthInTheFieldRange(int i, int j)
 {
 	if(0 < i && i < ROWNUM - 1)

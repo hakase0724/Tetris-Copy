@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "TetriMino.h"
 #include <algorithm>
+#include <sstream>
 
 using namespace MyDirectX;
 TetriMino::TetriMino(FieldManager* field)
@@ -16,6 +17,8 @@ void TetriMino::Start()
 	mIsNext = false;
 	mIsGameOver = false;
 	mLandingFrame = 0;
+	mIsTspin = false;
+	mIsTspinMini = false;
 }
 
 void TetriMino::TetriMinoPreUpdate()
@@ -39,22 +42,21 @@ void TetriMino::TetriMinoPreUpdate()
 		mIsNext = false;
 		mLandingFrame = 0;
 	}
-	MemoryPrePiecePosition();
 }
 
 void TetriMino::TetriMinoUpdate()
 {
+	//ゴースト位置の計算
 	CalcGhostPosition();
+	//ゴーストを削除
 	mFieldManager->ErasePiece(Ghost);
+	//ゴーストを表示
 	for (auto ghostPos : mGhostPositions)
 	{
 		mFieldManager->UpdatePiece(ghostPos.x, ghostPos.y, Ghost, mColor);
 	}
-	//開始時位置のピースを消去
-	for(auto piecePos:mPrePiecePositions)
-	{
-		mFieldManager->ErasePiece(piecePos.x, piecePos.y);
-	}
+	//テトリミノを削除
+	mFieldManager->ErasePiece(PlayerControll);
 	//現在位置のピースを表示
 	for (auto piecePos : mPiecePositions)
 	{
@@ -80,14 +82,9 @@ bool TetriMino::MoveTetriMinoSafe(int rowMove, int columnMove)
 	if (!MoveTetriMino(rowMove, columnMove)) 
 	{
 		MoveTetriMino(-rowMove, -columnMove);
-		mLandingFrame = 0;
 		return false;
 	}
-	else 
-	{
-		mLandingFrame = 0;
-		return true;
-	}
+	else return true;
 }
 
 bool TetriMino::RightRotation()
@@ -106,7 +103,6 @@ bool TetriMino::RightRotationSafe()
 	if(!RightRotation())
 	{
 		LeftRotation();
-		mLandingFrame = 0;
 		return false;
 	}
 	else
@@ -149,13 +145,91 @@ void TetriMino::GoNext()
 	mIsLanding = false;
 }
 
-void TetriMino::MemoryPrePiecePosition()
+bool TetriMino::GetIsTspin()
 {
-	//フレーム開始時の位置を記憶
-	for (int i = 0; i < 4; i++)
+#if _DEBUG
+	std::wstringstream ws;
+	switch (mLastAction)
 	{
-		mPrePiecePositions[i] = mPiecePositions[i];
+	case MyDirectX::Move:
+		ws << "Move" << std::endl;
+		break;
+	case MyDirectX::Rotation:
+		ws << "Rotation" << std::endl;
+		break;
+	default:
+		break;
 	}
+	OutputDebugString(ws.str().c_str());
+#endif
+	if (mLastAction != Rotation) return false;
+	return IsTspin();
+}
+
+bool TetriMino::GetIsTspinMini()
+{
+	if (!mIsTspin) return false;
+	return IsTspinMini();
+}
+
+bool TetriMino::IsTspin()
+{
+	//4隅のピース数をカウント
+	auto pieceCount = 0;
+	//中央のピース
+	auto centerPiece = mPiecePositions[0];
+	//4隅のピースの状態取得
+	auto rightUpState = mFieldManager->GetPieceState(centerPiece.x - 1, centerPiece.y + 1);
+	auto leftUpState = mFieldManager->GetPieceState(centerPiece.x + 1, centerPiece.y + 1);
+	auto rightDownState = mFieldManager->GetPieceState(centerPiece.x - 1, centerPiece.y - 1);
+	auto leftDownState = mFieldManager->GetPieceState(centerPiece.x + 1, centerPiece.y - 1);
+	//取得したピースの状態が盤面固定されたピースであればカウントアップ
+	if (rightUpState == FieldLock) pieceCount++;
+	if (leftUpState == FieldLock) pieceCount++;
+	if (rightDownState == FieldLock) pieceCount++;
+	if (leftDownState == FieldLock) pieceCount++;
+	//4隅のピースが3つ以上あればTスピンである
+	if (pieceCount >= 3)
+	{
+		mIsTspin = true;
+		OutputDebugString(_T("TSPIN"));
+		return true;
+	}
+	else return false;
+}
+
+bool TetriMino::IsTspinMini()
+{
+	//中央のピース
+	auto centerPiece = mPiecePositions[0];
+	//中央の背後のピースの状態
+	auto centerBackPieceState = Space;
+	//ピースの回転状態によって背後のピースを求める
+	switch (mRotationState)
+	{
+	case A:
+		centerBackPieceState = mFieldManager->GetPieceState(centerPiece.x, centerPiece.y - 1);
+		break;
+	case B:
+		centerBackPieceState = mFieldManager->GetPieceState(centerPiece.x + 1, centerPiece.y);
+		break;
+	case C:
+		centerBackPieceState = mFieldManager->GetPieceState(centerPiece.x, centerPiece.y + 1);
+		break;
+	case D:
+		centerBackPieceState = mFieldManager->GetPieceState(centerPiece.x - 1, centerPiece.y);
+		break;
+	default:
+		break;
+	}
+	//背後のピースが盤面固定されていれば
+	if (centerBackPieceState == FieldLock) 
+	{
+		mIsTspin = false;
+		mIsTspinMini = true;
+		return true;
+	}
+	else return false;
 }
 
 void TetriMino::CalcPiecePosition()
@@ -666,5 +740,7 @@ void TetriMino::SetPlayerTetriMino(int row, int column, TetriMinoType type)
 		}
 	}
 	mIsNext = false;
-	MemoryPrePiecePosition();
+	//Tスピン判定を初期化
+	mIsTspin = false;
+	mIsTspinMini = false;
 }

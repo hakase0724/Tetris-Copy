@@ -12,30 +12,53 @@ TetriMinoRotation::TetriMinoRotation(DXResourceManager* manager, TetriMino* tetr
 	mSuperRotationState = Zero;
 }
 
+void TetriMinoRotation::Start()
+{
+	mSuperRotationState = Zero;
+}
+
 void TetriMinoRotation::Update()
 {
 	//Oテトリミノであれば回転処理は行わない
 	auto type = mTetriMino->GetTetriMinoType();
 	if (type == O) return;
+	//回転軸の移動量を初期化
 	mMovePosition.x = 0;
 	mMovePosition.y = 0;
+	//スーパーローテーションステートを初期化
 	mSuperRotationState = Zero;
+	//テトリミノの回転状態と形を取得
 	mTetriMinoRotationState = mTetriMino->GetRotationState();
 	mTetriMinoType = mTetriMino->GetTetriMinoType();
+	//左回転
 	if (mManager->GetKeyDown(DIK_Z))
 	{
-		if (!mTetriMino->LeftRotation()) 
+		//成功したら
+		if (mTetriMino->LeftRotation()) 
+		{
+			mTetriMino->SetTetriMinoAction(Rotation);
+		}
+		//失敗したらスーパーローテーションへ
+		else
 		{
 			mSuperRotationState = One;
-			if(!IsSuperRotation()) mTetriMino->RightRotation();
+			if(IsSuperRotation()) mTetriMino->SetTetriMinoAction(Rotation); 
+			else mTetriMino->RightRotation();
 		}
 	}
 	if (mManager->GetKeyDown(DIK_X))
 	{
-		if (!mTetriMino->RightRotation()) 
+		//成功したら
+		if(mTetriMino->RightRotation())
+		{
+			mTetriMino->SetTetriMinoAction(Rotation);
+		}
+		//失敗したらスーパーローテーションへ
+		else
 		{
 			mSuperRotationState = One;
-			if (!IsSuperRotation()) mTetriMino->LeftRotation();
+			if (IsSuperRotation()) mTetriMino->SetTetriMinoAction(Rotation); 
+			else mTetriMino->LeftRotation();
 		}
 	}
 }

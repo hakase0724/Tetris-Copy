@@ -25,6 +25,8 @@ namespace MyDirectX
 		bool IsGameOver() { return mTetriMino->GetIsGameOver(); }
 		//移動の仕方によって追加スコアが発生する
 		int GetMoveScore();
+		bool GetIsTspin() { return mTetriMino->GetIsTspin(); }
+		bool GetIsTspinMini() { return mTetriMino->GetIsTspinMini(); }
 	private:
 		Scene* mScene;
 		//移動管理

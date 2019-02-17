@@ -50,9 +50,13 @@ namespace MyDirectX
 		void GoNext();
 		//今の回転状態を返す
 		TetriMinoRotationState GetRotationState() { return mRotationState; }
+		//行った動作をセットする
+		void SetTetriMinoAction(TetriMinoAction action) { mLastAction = action; }
+		//Tスピンの判定
+		bool GetIsTspin();
+		bool GetIsTspinMini();
+		
 	private:
-		//ピースの位置を記憶
-		void MemoryPrePiecePosition();
 		//回転状態列挙体の要素数
 		const int ROTATIONSTATENUM = 4;
 		//中心座標をもとに各ピースの座標を計算する
@@ -65,6 +69,10 @@ namespace MyDirectX
 		bool IsGhostDuplication();
 		//着地しているか
 		bool IsLanding();
+		//Tスピン判定
+		bool IsTspin();
+		//Tスピンミニ判定
+		bool IsTspinMini();
 		//盤面
 		FieldManager* mFieldManager;
 		//形
@@ -75,11 +83,11 @@ namespace MyDirectX
 		TetriMinoRotationState mRotationState;
 		//前回の回転状態
 		TetriMinoRotationState mPreRotationState;
+		//最後に行った操作
+		TetriMinoAction mLastAction;
 		//保有するピース
 		//0番目が中心
 		PiecePosition mPiecePositions[4];
-		//フレーム開始時のピースの位置
-		PiecePosition mPrePiecePositions[4];
 		//ゴーストの位置
 		PiecePosition mGhostPositions[4];
 		//着地しているか
@@ -92,6 +100,10 @@ namespace MyDirectX
 		bool mIsNext = false;
 		//ゲームオーバー判定
 		bool mIsGameOver = false;
+		//Tスピンしているか
+		bool mIsTspin = false;
+		//Tスピンミニしているか
+		bool mIsTspinMini = false;
 	};
 }
 

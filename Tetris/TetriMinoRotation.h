@@ -9,6 +9,7 @@ namespace MyDirectX
 	public:
 		TetriMinoRotation(DXResourceManager* manager, TetriMino* tetrimino);
 		~TetriMinoRotation() {};
+		void Start();
 		void Update();
 	private:
 		bool IsSuperRotation();

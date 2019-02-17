@@ -17,6 +17,7 @@ void TetriMinoController::Start()
 	mMove->Start();
 	mTetriMino->Start();
 	mHold->Start();
+	mRotation->Start();
 }
 
 void TetriMinoController::SetTetriMino(int i, int j, TetriMinoType type)

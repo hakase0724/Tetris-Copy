@@ -11,6 +11,7 @@ namespace MyLib
 	void Init(int & value);
 	void Init(double & value);
 	void Init(float & value);
+	void Init(bool & value);
 	
 }
 

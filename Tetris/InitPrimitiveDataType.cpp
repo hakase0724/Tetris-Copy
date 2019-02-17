@@ -15,3 +15,8 @@ void MyLib::Init(float & value)
 {
 	value = 0.0f;
 }
+
+void MyLib::Init(bool & value)
+{
+	value = false;
+}

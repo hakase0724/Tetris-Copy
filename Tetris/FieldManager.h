@@ -25,7 +25,8 @@ namespace MyDirectX
 		PieceState GetPieceState(int i, int j);
 		int GetROWNUM() const { return ROWNUM; }
 		int GetCOLUMNNUM() const { return COLUMNNUM; }
-		int GetEraseScore();
+		int GetEraseLineCount() { return mEraseLine.size(); }
+		int GetLevel() { return mLevelRP->GetValue(); }
 	private:
 		bool IsWidthInTheFieldRange(int i, int j);
 		std::vector <std::vector<Piece*>> mPieces;
@@ -37,9 +38,7 @@ namespace MyDirectX
 		std::vector<int> mEraseLine;
 		std::unique_ptr<ReactiveProperty<int>, Deleter> mLevelRP;
 		std::unique_ptr<ReactiveProperty<int>, Deleter> mEraseLineCountRP;
-		int mLevel = 1;
 		int mFreeFallFrame = mDefaultFreeFallFrame;
-		int mTotalEraseLineCount = 0;
 		DXGameObject* mLevelUI;
 		DXText* mLevelUIText;
 		DXGameObject* mEraseLineCountUI;
