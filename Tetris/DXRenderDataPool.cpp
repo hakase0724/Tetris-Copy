@@ -47,7 +47,7 @@ DXRenderDataPool::DXRenderDataPool(ID3D11Device * device, ID3D11DeviceContext * 
 	mDevice->CreateShaderResourceView(fontTexture, &srvDesc, &pData->shaderView);
 	//ƒf[ƒ^‚ð\‘¢‘Ì‚ÉŠi”[
 	pData->texture = fontTexture;
-	pData->fileName = *const_cast<wchar_t*>(L" ");
+	pData->fileName = _T("");
 	mTextureList.push_back(std::move(pData));
 }
 

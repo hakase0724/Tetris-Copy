@@ -25,6 +25,7 @@ namespace MyDirectX
 		TetriMino* mTetriMino;
 		TetriMinoType mHoldType;
 		TetriMinoUI* mHoldUI;
+		DXSound* mHoldSE;
 	};
 }
 

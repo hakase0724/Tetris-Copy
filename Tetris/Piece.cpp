@@ -12,6 +12,7 @@ void Piece::Initialize(DXGameObject* gameObject)
 	mGreenTexturePath = _T("Texture/Green.png");
 	mPurpleTexturePath = _T("Texture/Purple.png");
 	mLightBlueTexturePath = _T("Texture/LightBlue.png");
+	mEraseColorPath = _T("Texture/LineFlash.png");
 
 	mDebugTextObject = mGameObject->GetScene()->Instantiate();
 	auto debugTransform = mDebugTextObject->GetTransform();
@@ -54,6 +55,10 @@ void Piece::SetPieceState(PieceState state)
 		mGameObject->SetEnable(true);
 		mRenderer->SetEnable(true);
 		mDebugText->UpdateText(_T("W"));
+		break;
+	case PieceState::Erase:
+		mTexture->SetTexture(mEraseColorPath.c_str());
+		mDebugText->UpdateText(_T("E"));
 		break;
 	case Ghost:
 		mGameObject->SetEnable(true);
@@ -104,7 +109,3 @@ void Piece::SetDebugFlg(bool flg)
 	if (mIsDebug) mDebugTextObject->SetEnable(true);
 	else mDebugTextObject->SetEnable(false);
 }
-void Piece::Erase() 
-{
-	SetPieceState(Space);
-};

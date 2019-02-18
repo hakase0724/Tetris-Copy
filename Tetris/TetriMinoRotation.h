@@ -20,6 +20,7 @@ namespace MyDirectX
 		SuperRotationState mSuperRotationState;
 		PiecePosition mMovePosition;
 		TetriMinoType mTetriMinoType;
+		DXSound* mRotationSE;
 	};
 }
 

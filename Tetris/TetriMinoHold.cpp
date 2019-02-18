@@ -15,6 +15,8 @@ TetriMinoHold::TetriMinoHold(DXResourceManager * manager, TetriMino * tetrimino,
 	uiTransform->Position = DirectX::XMFLOAT3(-2.06f, 0.85f, -0.01f);
 	uiTransform->Scale = DirectX::XMFLOAT3(0.3f,0.3f,1.0f);
 	mHoldUI = ui->AddComponent<TetriMinoUI>();
+
+	mHoldSE = mManager->GetSoundManager()->GetSESound(_T("Sound/SE/Hold.wav"));
 }
 
 void TetriMinoHold::Start()
@@ -39,7 +41,7 @@ void TetriMinoHold::Hold()
 {
 	//ƒƒbƒN‚³‚ê‚Ä‚¢‚½‚ç
 	if (mIsLockHold) return;
-	mTetriMino->ErasePiece();
+	mTetriMino->ChangePieceStateToSpace();
 	if(mIsHold)
 	{
 		auto type = mTetriMino->GetTetriMinoType();
@@ -53,4 +55,6 @@ void TetriMinoHold::Hold()
 	}
 	mHoldUI->SetTetriMinoType(mHoldType);
 	mIsLockHold = true;
+	mHoldSE->ResetSound();
+	mHoldSE->Play(false);
 }

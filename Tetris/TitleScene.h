@@ -9,7 +9,10 @@ namespace MyDirectX
 		TitleScene() {};
 		~TitleScene() {};
 		virtual void Init() override;
+		virtual void SceneStart() override;
 		virtual bool IsSceneEnd() override;
+	private:
+		DXSound* mBGM;
 	};
 }
 

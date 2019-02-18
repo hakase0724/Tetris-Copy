@@ -12,10 +12,13 @@ namespace MyDirectX
 		void Start();
 		void Update();
 		int GetMoveScore() const { return mMoveScore; }
+		bool GetSoftDrop() { return mIsSoftDrop; }
 	private:
 		DXResourceManager* mManager;
 		FieldManager* mFieldManager;
 		TetriMino* mTetriMino;
+		DXSound* mMoveSE;
+		DXSound* mHardDropSE;
 		int mFrameCount = 0;
 		int mFreeFallCount = 60;
 		bool mIsLanding = false;

@@ -18,7 +18,6 @@ namespace MyDirectX
 		void SetDebugFlg(bool flg);
 		PieceState GetPieceState() { return mState; }
 		PieceColor GetPieceColor() { return mColor; }
-		void Erase();
 	private:
 		DXGameObject* mDebugTextObject;
 		DXText* mDebugText;
@@ -36,6 +35,7 @@ namespace MyDirectX
 		std::wstring mPurpleTexturePath;
 		std::wstring mLightBlueTexturePath;
 		std::wstring mPieceColorPath;
+		std::wstring mEraseColorPath;
 		bool mIsDebug = true;
 	};
 }

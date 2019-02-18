@@ -23,6 +23,8 @@ namespace MyDirectX
 		virtual void SceneEnd() override;
 		virtual bool IsSceneEnd() override;
 	private:
+		const int cWaitFrame = 60;
+		int mWaitStartFrame;
 		int GetRandRange(int min, int max);
 		//UIóvëfê∂ê¨
 		void CreateUIItem();
@@ -46,6 +48,9 @@ namespace MyDirectX
 		using Property = ReactiveProperty<double>;
 		//FPSï\é¶Ç…égÇ§ïœêî
 		std::unique_ptr<Property, Deleter> mFPSRP;
+		DXSound* mBGM;
+		DXSound* mDeleteSound;
+		PlaySceneState mState = Play;
 	};
 }
 

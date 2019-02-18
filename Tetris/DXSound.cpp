@@ -9,6 +9,7 @@ using namespace MyDirectX;
 
 DXSound::DXSound(HWND hwnd, LPWSTR sourcePath)
 {
+	mSourcePath = sourcePath;
 	// Waveファイルオープン
 	WAVEFORMATEX wFmt;
 	char *pWaveData = 0;

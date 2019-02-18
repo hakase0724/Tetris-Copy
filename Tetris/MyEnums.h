@@ -24,6 +24,7 @@ namespace MyDirectX
 		PlayerControll,
 		FieldLock,
 		Wall,
+		Erase,
 		Ghost
 	};
 
@@ -73,5 +74,10 @@ namespace MyDirectX
 		Rotation
 	};
 
-
+	enum PlaySceneState
+	{
+		Play,
+		Next,
+		Wait
+	};
 }

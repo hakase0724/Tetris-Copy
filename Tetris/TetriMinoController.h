@@ -38,6 +38,7 @@ namespace MyDirectX
 		//ƒeƒgƒŠƒ~ƒm
 		std::unique_ptr<TetriMino> mTetriMino;
 		DXResourceManager* mManager;
+		DXSound* mSoftLandingSE;
 	};
 }
 

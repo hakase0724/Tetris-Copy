@@ -168,6 +168,7 @@
     <ClInclude Include="DXRenderDataPool.h" />
     <ClInclude Include="DXResourceManager.h" />
     <ClInclude Include="DXSound.h" />
+    <ClInclude Include="DXSoundManager.h" />
     <ClInclude Include="DXText.h" />
     <ClInclude Include="DXTexture.h" />
     <ClInclude Include="FieldManager.h" />
@@ -175,6 +176,7 @@
     <ClInclude Include="FuctionCountTimer.h" />
     <ClInclude Include="IComponent.h" />
     <ClInclude Include="InitPrimitiveDataType.h" />
+    <ClInclude Include="LightMove.h" />
     <ClInclude Include="MeshAndShader.h" />
     <ClInclude Include="MeshFactory.h" />
     <ClInclude Include="MeshInfo.h" />
@@ -222,12 +224,14 @@
     <ClCompile Include="DXRenderDataPool.cpp" />
     <ClCompile Include="DXResourceManager.cpp" />
     <ClCompile Include="DXSound.cpp" />
+    <ClCompile Include="DXSoundManager.cpp" />
     <ClCompile Include="DXText.cpp" />
     <ClCompile Include="DXTexture.cpp" />
     <ClCompile Include="FieldManager.cpp" />
     <ClCompile Include="FPSCountor.cpp" />
     <ClCompile Include="FuctionCountTimer.cpp" />
     <ClCompile Include="InitPrimitiveDataType.cpp" />
+    <ClCompile Include="LightMove.cpp" />
     <ClCompile Include="MeshFactory.cpp" />
     <ClCompile Include="MeshRenderer.cpp" />
     <ClCompile Include="Mover.cpp" />

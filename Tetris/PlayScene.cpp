@@ -7,21 +7,33 @@
 #include <iomanip>
 #include <thread>
 #include <chrono>
+#include "LightMove.h"
 
 using namespace MyDirectX;
 
 void PlayScene::Init()
 {
+	//盤面管理
 	mFieldManager = std::make_unique<FieldManager>(this);
+	//スコア管理
 	mScoreManager = std::make_unique<ScoreManager>(this);
+	//ネクスト表示
 	mNext = std::make_unique<TetriMinoNext>(this);
+	//テトリミノ操作
 	mTetriMinoController = std::make_unique<TetriMinoController>(mDXRescourceManager,mFieldManager.get(),this);
+
 	CreateUIItem();
 	//全てのオブジェクトの初期位置を設定する
 	for(auto &game: mGameObjectsList)
 	{
 		game->SetDefaultTransform();
 	}
+	//プレイシーンのBGM取得
+	mBGM = mDXRescourceManager->GetSoundManager()->GetBGMSound(_T("Sound/BGM/TetrisTheme.wav"));
+	//音量下げる
+	mBGM->SetVolume(-1000);
+	//消去時の音
+	mDeleteSound = mDXRescourceManager->GetSoundManager()->GetSESound(_T("Sound/SE/Delete.wav"));
 }
 
 void PlayScene::SceneStart()
@@ -36,64 +48,96 @@ void PlayScene::SceneStart()
 	{
 		game->SetEnable(true);
 	}
+	//各種初期化
 	mFieldManager->Start();
 	mScoreManager->Start();
 	mNext->Start();
 	mTetriMinoController->Start();
+	//最初のテトリミノを出す
 	mTetriMinoController->SetTetriMino(5, 20, mNext->GetNextTetriMino());
 	//曲再生
-	//mDXRescourceManager->GetBGMDXSound()->Play();
+	mBGM->Play();
 }
 
 void PlayScene::SceneUpdate()
 {
 	mFrameCount++;
+#if _DEBUG
 	//FPSを計算し出力する
 	//毎フレーム出すと変化が激しすぎるので一定間隔で更新
 	if (mFrameCount % FPS_CHEACK_FRAME_COUNT == 0)
 	{
 		*mFPSRP = mDXRescourceManager->GetFPS();
 	}
-#if _DEBUG
 	if(mDXRescourceManager->GetKeyDown(DIK_NUMPAD0))
 	{
 		mFieldManager->ChangeDebugMode();
 	}
 #endif
-	mTetriMinoController->PreUpdate();
-	auto isPlaying = mTetriMinoController->Update();
-	//移動のスコアを加算する
-	mScoreManager->AddScore(mTetriMinoController->GetMoveScore());
-	//次のテトリミノを出すなら
-	if(!isPlaying)
-	{		
-		//ピースを盤面に固定
-		mFieldManager->LockPiece();
-		//Tスピン判定
-		auto isTspin = mTetriMinoController->GetIsTspin();
-		//Tスピンミニ判定
-		auto isTspinMini = mTetriMinoController->GetIsTspinMini();
-		//Tスピン成功UIの表示切替
-		if (isTspinMini)mTspinMiniUI->SetEnable(true);
-		else if (isTspin) mTspinUI->SetEnable(true);
-		else 
+	auto isPlaying = true;
+	switch (mState)
+	{
+	//テトリミノを操作している時
+	case Play:
+		mTetriMinoController->PreUpdate();
+		isPlaying = mTetriMinoController->Update();
+		//移動のスコアを加算する
+		mScoreManager->AddScore(mTetriMinoController->GetMoveScore());
+		if (!isPlaying) 
 		{
-			mTspinMiniUI->SetEnable(false);
-			mTspinUI->SetEnable(false);
+			//ピースを盤面に固定
+			mFieldManager->LockPiece();
+			//Tスピン判定
+			auto isTspin = mTetriMinoController->GetIsTspin();
+			//Tスピンミニ判定
+			auto isTspinMini = mTetriMinoController->GetIsTspinMini();
+			//Tスピン成功UIの表示切替
+			if (isTspinMini)mTspinMiniUI->SetEnable(true);
+			else if (isTspin) mTspinUI->SetEnable(true);
+			else
+			{
+				mTspinMiniUI->SetEnable(false);
+				mTspinUI->SetEnable(false);
+			}
+			//消去
+			mFieldManager->CheckErase();
+			//消したライン数
+			auto eraseLine = mFieldManager->GetEraseLineCount();
+			//消していなければ以後の処理をしない
+			if (eraseLine <= 0) 
+			{
+				mState = Next;
+				break;
+			}
+			//現在のレベル
+			auto level = mFieldManager->GetLevel();
+			//消去した時のスコアを加算
+			mScoreManager->AddScore(eraseLine, level, isTspin, isTspinMini);
+			mDeleteSound->ResetSound();
+			mDeleteSound->Play(false);
+			mWaitStartFrame = mFrameCount;
+			mState = Wait;
 		}
-		//消去
-		mFieldManager->CheckErase();
-		//消したライン数
-		auto eraseLine = mFieldManager->GetEraseLineCount();
-		//現在のレベル
-		auto level = mFieldManager->GetLevel();
-		
-		//消去した時のスコアを加算
-		mScoreManager->AddScore(eraseLine, level, isTspin, isTspinMini);
+		break;
+	//消去後の待ち
+	case Wait:
+		//フレームで待機
+		if((mFrameCount - mWaitStartFrame) % cWaitFrame == 0)
+		{
+			mState = Next;
+			mFieldManager->ChangePieceStateToSpace(PieceState::Erase);
+			mFieldManager->DropPiece();
+		}
+		break;
+	//次へ
+	case Next:
 		//次のテトリミノを出す
 		mTetriMinoController->SetTetriMino(5, 20, mNext->GetNextTetriMino());
-	}	
-	
+		mState = Play;
+		break;
+	default:
+		break;
+	}
 }
 
 void PlayScene::SceneEnd()
@@ -124,7 +168,7 @@ void PlayScene::SceneEnd()
 		else ++itr;
 	}
 	//曲を止める
-	//mDXRescourceManager->GetBGMDXSound()->Stop();
+	mBGM->Stop();
 }
 
 bool PlayScene::IsSceneEnd()

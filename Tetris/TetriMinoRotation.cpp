@@ -10,6 +10,7 @@ TetriMinoRotation::TetriMinoRotation(DXResourceManager* manager, TetriMino* tetr
 	mManager = manager;
 	mTetriMino = tetrimino;
 	mSuperRotationState = Zero;
+	mRotationSE = mManager->GetSoundManager()->GetSESound(_T("Sound/SE/Rotation.wav"));
 }
 
 void TetriMinoRotation::Start()
@@ -37,12 +38,19 @@ void TetriMinoRotation::Update()
 		if (mTetriMino->LeftRotation()) 
 		{
 			mTetriMino->SetTetriMinoAction(Rotation);
+			mRotationSE->ResetSound();
+			mRotationSE->Play(false);
 		}
 		//失敗したらスーパーローテーションへ
 		else
 		{
 			mSuperRotationState = One;
-			if(IsSuperRotation()) mTetriMino->SetTetriMinoAction(Rotation); 
+			if (IsSuperRotation()) 
+			{
+				mTetriMino->SetTetriMinoAction(Rotation);
+				mRotationSE->ResetSound();
+				mRotationSE->Play(false);
+			}
 			else mTetriMino->RightRotation();
 		}
 	}
@@ -52,12 +60,19 @@ void TetriMinoRotation::Update()
 		if(mTetriMino->RightRotation())
 		{
 			mTetriMino->SetTetriMinoAction(Rotation);
+			mRotationSE->ResetSound();
+			mRotationSE->Play(false);
 		}
 		//失敗したらスーパーローテーションへ
 		else
 		{
 			mSuperRotationState = One;
-			if (IsSuperRotation()) mTetriMino->SetTetriMinoAction(Rotation); 
+			if (IsSuperRotation())
+			{
+				mTetriMino->SetTetriMinoAction(Rotation);
+				mRotationSE->ResetSound();
+				mRotationSE->Play(false);
+			}
 			else mTetriMino->LeftRotation();
 		}
 	}

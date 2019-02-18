@@ -18,9 +18,9 @@ namespace MyDirectX
 		void LockPiece();
 		void UpdatePiece(int i, int j, PieceState state, PieceColor color);
 		void CheckErase();
+		void DropPiece();
 		void ChangeDebugMode();
-		void ErasePiece(int i,int j);
-		void ErasePiece(PieceState state = PlayerControll);
+		void ChangePieceStateToSpace(PieceState state = PlayerControll);
 		int GetFreeFallFrame() const { return mFreeFallFrame; }
 		PieceState GetPieceState(int i, int j);
 		int GetROWNUM() const { return ROWNUM; }
@@ -31,6 +31,7 @@ namespace MyDirectX
 		bool IsWidthInTheFieldRange(int i, int j);
 		std::vector <std::vector<Piece*>> mPieces;
 		std::vector <std::vector<int>> mDropCounts;
+		void EraseEffect();
 		void PieceDrop();
 		Scene* mScene;
 		const int ROWNUM = 12;
@@ -48,6 +49,8 @@ namespace MyDirectX
 		int mDefaultFreeFallFrame = 60;
 		//ç≈ëÂÉåÉxÉã
 		int mMaxLevel = 15;
+		DXGameObject* mOneLineEffect;
+		DXGameObject* mOneLineEffect2;
 	};
 }
 

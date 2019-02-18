@@ -6,6 +6,7 @@ TetriMinoController::TetriMinoController(DXResourceManager* manager,FieldManager
 {
 	mManager = manager;
 	mScene = scene;
+	mSoftLandingSE = mManager->GetSoundManager()->GetSESound(_T("Sound/SE/SoftLanding.wav"));
 	mTetriMino = std::make_unique<TetriMino>(fieldManager);
 	mMove = std::make_unique<TetriMinoMove>(mManager,mTetriMino.get(),fieldManager);
 	mRotation = std::make_unique<TetriMinoRotation>(mManager, mTetriMino.get());
@@ -39,6 +40,11 @@ bool TetriMinoController::Update()
 		//ˆÊ’u‚ğŠm’è‚µ•\¦
 		mTetriMino->TetriMinoUpdate();
 		mHold->UnlockHold();
+		if(mMove->GetSoftDrop())
+		{
+			mSoftLandingSE->ResetSound();
+			mSoftLandingSE->Play(false);
+		}
 		//ˆÈŒã‚Ìˆ—‚ğ‚µ‚È‚¢
 		return false;
 	}

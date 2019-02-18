@@ -18,8 +18,8 @@ void TetriMinoUI::Initialize(DXGameObject * gameObject)
 
 void TetriMinoUI::Initialize()
 {
-	mTexture->SetTexture(_T(""));
 	if (mTexture == nullptr) mGameObject->GetComponent<DXTexture>();
+	mTexture->SetTexture(_T(""));
 }
 
 void TetriMinoUI::SetTetriMinoType(TetriMinoType type)

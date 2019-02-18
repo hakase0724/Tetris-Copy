@@ -7,6 +7,10 @@ TetriMinoMove::TetriMinoMove(DXResourceManager* manager, TetriMino* tetrimino, F
 	mManager = manager;
 	mTetriMino = tetrimino;
 	mFieldManager = fieldManager;
+	auto soundManager = mManager->GetSoundManager();
+	mMoveSE = soundManager->GetSESound(_T("Sound/SE/Move.wav"));
+	mMoveSE->SetVolume(DSBVOLUME_MAX);
+	mHardDropSE = soundManager->GetSESound(_T("Sound/SE/HardLanding.wav"));
 }
 
 void TetriMinoMove::Start()
@@ -24,17 +28,32 @@ void TetriMinoMove::Update()
 		auto isFall = mTetriMino->MoveTetriMinoSafe(0, -1);
 		if (isFall) mTetriMino->SetTetriMinoAction(Move);
 		//‚‘¬—Ž‰º’†‚©‚Â—Ž‚¿‚ê‚½‚ç
-		if (mIsSoftDrop && isFall) mMoveScore++;
+		if (mIsSoftDrop && isFall) 
+		{
+			mMoveScore++;
+			mMoveSE->ResetSound();
+			mMoveSE->Play(false);
+		}
 	}
 	if (mManager->GetKeyDown(DIK_LEFTARROW))
 	{
 		auto isMove = mTetriMino->MoveTetriMinoSafe(1, 0);
-		if (isMove) mTetriMino->SetTetriMinoAction(Move);
+		if (isMove) 
+		{
+			mTetriMino->SetTetriMinoAction(Move);
+			mMoveSE->ResetSound();
+			mMoveSE->Play(false);
+		}
 	}
 	if (mManager->GetKeyDown(DIK_RIGHTARROW))
 	{
 		auto isMove = mTetriMino->MoveTetriMinoSafe(-1, 0);
-		if (isMove) mTetriMino->SetTetriMinoAction(Move);
+		if (isMove)
+		{
+			mTetriMino->SetTetriMinoAction(Move);
+			mMoveSE->ResetSound();
+			mMoveSE->Play(false);
+		}
 	}
 	if (mManager->GetKeyDown(DIK_UPARROW))
 	{
@@ -43,6 +62,9 @@ void TetriMinoMove::Update()
 			mMoveScore++;
 		}
 		mTetriMino->SetTetriMinoAction(Move);
+		mHardDropSE->ResetSound();
+		mHardDropSE->Play(false);
+		mIsSoftDrop = false;
 		mTetriMino->GoNext();
 	}
 	if (mManager->GetKey(DIK_DOWNARROW))

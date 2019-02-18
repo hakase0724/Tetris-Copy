@@ -39,7 +39,7 @@ namespace MyDirectX
 		//今のテトリミノの形を返す
 		TetriMinoType GetTetriMinoType() { return mType; }
 		//テトリミノを消す
-		void ErasePiece() { mFieldManager->ErasePiece(); }
+		void ChangePieceStateToSpace() { mFieldManager->ChangePieceStateToSpace(); }
 		//着地フラグをセットする
 		void SetIsLanding(bool isLanding) { mIsLanding = isLanding; }
 		//次のテトリミノを出すか

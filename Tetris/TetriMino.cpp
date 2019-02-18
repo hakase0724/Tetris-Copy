@@ -49,14 +49,14 @@ void TetriMino::TetriMinoUpdate()
 	//ゴースト位置の計算
 	CalcGhostPosition();
 	//ゴーストを削除
-	mFieldManager->ErasePiece(Ghost);
+	mFieldManager->ChangePieceStateToSpace(Ghost);
 	//ゴーストを表示
 	for (auto ghostPos : mGhostPositions)
 	{
 		mFieldManager->UpdatePiece(ghostPos.x, ghostPos.y, Ghost, mColor);
 	}
 	//テトリミノを削除
-	mFieldManager->ErasePiece(PlayerControll);
+	mFieldManager->ChangePieceStateToSpace(PlayerControll);
 	//現在位置のピースを表示
 	for (auto piecePos : mPiecePositions)
 	{
@@ -147,21 +147,6 @@ void TetriMino::GoNext()
 
 bool TetriMino::GetIsTspin()
 {
-#if _DEBUG
-	std::wstringstream ws;
-	switch (mLastAction)
-	{
-	case MyDirectX::Move:
-		ws << "Move" << std::endl;
-		break;
-	case MyDirectX::Rotation:
-		ws << "Rotation" << std::endl;
-		break;
-	default:
-		break;
-	}
-	OutputDebugString(ws.str().c_str());
-#endif
 	if (mLastAction != Rotation) return false;
 	return IsTspin();
 }
@@ -192,7 +177,6 @@ bool TetriMino::IsTspin()
 	if (pieceCount >= 3)
 	{
 		mIsTspin = true;
-		OutputDebugString(_T("TSPIN"));
 		return true;
 	}
 	else return false;

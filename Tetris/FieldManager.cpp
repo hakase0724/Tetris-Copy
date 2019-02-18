@@ -5,11 +5,27 @@
 #include "CommonValues.h"
 #include <sstream>
 #include <iomanip>
+#include "LightMove.h"
+#include <algorithm>
 
 using namespace MyDirectX;
 FieldManager::FieldManager(Scene* scene)
 {
 	mScene = scene;
+
+	mOneLineEffect = mScene->Instantiate();
+	auto lightTex = mOneLineEffect->AddComponent<DXTexture>();
+	lightTex->SetTexture(_T("Texture/Light.png"));
+	mOneLineEffect->AddComponent<LightMove>();
+	auto renderer = mOneLineEffect->GetComponent<TextureRenderer>();
+	renderer->SetAlphaBlendingFlg(true);
+
+	mOneLineEffect2 = mScene->Instantiate();
+	auto lightTex2 = mOneLineEffect2->AddComponent<DXTexture>();
+	lightTex2->SetTexture(_T("Texture/Light.png"));
+	mOneLineEffect2->AddComponent<LightMove>();
+	auto renderer2 = mOneLineEffect2->GetComponent<TextureRenderer>();
+	renderer2->SetAlphaBlendingFlg(true);
 
 	mLevelUI = mScene->Instantiate();
 	mLevelUIText = mLevelUI->AddComponent<DXText>();
@@ -104,22 +120,29 @@ void FieldManager::CheckErase()
 			mEraseLine.push_back(j);
 			for (int i = 1; i < ROWNUM - 1; i++)
 			{
-				ErasePiece(i, j);
+				mPieces[i][j]->SetPieceState(PieceState::Erase);
 			}
 		}
 	}
-	//消去していれば落下処理を行う
-	if (!mEraseLine.empty()) 
+
+	//消去していれば
+	if (!mEraseLine.empty())
 	{
-		PieceDrop();
 		*mEraseLineCountRP + mEraseLine.size();
-		if(mEraseLineCountRP->GetValue() / 10 == mLevelRP->GetValue())
+		if (mEraseLineCountRP->GetValue() / 10 == mLevelRP->GetValue())
 		{
-			if(mLevelRP->GetValue() < mMaxLevel) *mLevelRP + 1;
+			if (mLevelRP->GetValue() < mMaxLevel) *mLevelRP + 1;
 			mFreeFallFrame = mDefaultFreeFallFrame - (mLevelRP->GetValue() * (mDefaultFreeFallFrame / mMaxLevel));
 			if (mFreeFallFrame <= 0) mFreeFallFrame = 1;
 		}
+		EraseEffect();
 	}
+	
+}
+
+void FieldManager::DropPiece()
+{
+	if (!mEraseLine.empty()) PieceDrop();
 }
 
 void FieldManager::ChangeDebugMode()
@@ -135,13 +158,7 @@ void FieldManager::ChangeDebugMode()
 	}
 }
 
-void FieldManager::ErasePiece(int i, int j)
-{
-	if (!IsWidthInTheFieldRange(i, j)) return;
-	mPieces[i][j]->Erase();
-}
-
-void FieldManager::ErasePiece(PieceState state)
+void FieldManager::ChangePieceStateToSpace(PieceState state)
 {
 	for(auto pieces:mPieces)
 	{
@@ -149,7 +166,7 @@ void FieldManager::ErasePiece(PieceState state)
 		{
 			if(piece->GetPieceState() == state)
 			{
-				piece->Erase();
+				piece->SetPieceState(Space);
 			}
 		}
 	}
@@ -171,6 +188,53 @@ bool FieldManager::IsWidthInTheFieldRange(int i, int j)
 		if (0 < j && j < COLUMNNUM) return true;
 	}
 	return false;
+}
+
+void FieldManager::EraseEffect()
+{
+	//消去したラインを照準に並び替え
+	std::sort(mEraseLine.begin(), mEraseLine.end());
+	//最初のラインを格納
+	auto startLine = mEraseLine.front();
+	//連続している段数
+	auto linkLineCount = 1;
+	auto linkLineCount2 = 1;
+	//段飛びしているか
+	auto isJumpLine = false;
+	auto noLinkLine = 0;
+	auto preLine = startLine;
+	
+	for (auto line : mEraseLine)
+	{
+		//ひとつ前の判定と同じ値なら無視
+		if (preLine == line) continue;
+		//ひとつ前の値と連続しているか
+		if (preLine + 1 == line)
+		{
+			//段飛びしていれば
+			if (isJumpLine)linkLineCount2++;
+			else linkLineCount++;
+		}
+		else
+		{
+			isJumpLine = true;
+			noLinkLine = line;
+		}
+		preLine = line;
+	}
+	auto lineEffect = mOneLineEffect->GetTransform();
+	auto lineYPos = cBottomPos + cPieceHeightOffset * ((float)startLine + (float)linkLineCount / 4);
+	lineEffect->Position = DirectX::XMFLOAT3(-1.7f, lineYPos, -0.1f);
+	lineEffect->Scale = DirectX::XMFLOAT3(0.1f, 0.1f * linkLineCount, 1.0f);
+	mOneLineEffect->SetEnable(true);
+	if(isJumpLine)
+	{
+		auto lineYPos2 = cBottomPos + cPieceHeightOffset * ((float)noLinkLine + (float)linkLineCount2 / 4);
+		auto lineEffect2 = mOneLineEffect2->GetTransform();
+		lineEffect2->Position = DirectX::XMFLOAT3(-1.7f, lineYPos2, -0.1f);
+		lineEffect2->Scale = DirectX::XMFLOAT3(0.1f, 0.1f * linkLineCount2, 1.0f);
+		mOneLineEffect2->SetEnable(true);
+	}
 }
 
 void FieldManager::PieceDrop()
@@ -196,7 +260,7 @@ void FieldManager::PieceDrop()
 		{
 			if (mDropCounts[i][j] <= 0) continue;
 			auto color = mPieces[i][j]->GetPieceColor();
-			ErasePiece(i, j);
+			mPieces[i][j]->SetPieceState(Space);
 			UpdatePiece(i, j - mDropCounts[i][j], FieldLock, color);
 			mDropCounts[i][j] = 0;
 		}
