@@ -8,12 +8,6 @@ using namespace MyDirectX;
 DXCamera::DXCamera(CAMERA_PARAM * param)
 {
 	mParam = *param;
-	//スクリーン座標を取得するための行列作成
-	XMVECTOR one = XMVectorSet(cWidth / 2.0f, 0.0f, 0.0f, 0.0f);
-	XMVECTOR two = XMVectorSet(0.0f, -cHeight / 2.0f, 0.0f, 0.0f);
-	XMVECTOR three = XMVectorSet(cWidth / 2.0f, 0.0f, 1.0f, 0.0f);
-	XMVECTOR four = XMVectorSet(cWidth / 2.0f, cHeight / 2.0f, 0.0f, 1.0f);
-	mMatrix = XMMATRIX(one, two, three, four);
 }
 
 XMMATRIX DXCamera::GetDXCameraParam(TRANSFORM* transform)
@@ -35,46 +29,4 @@ XMMATRIX DXCamera::GetDXCameraParam(TRANSFORM* transform)
 	
 	//転置行列を計算 要はカメラの場所や視界を計算するってことだと思う
 	return XMMatrixTranspose(scale * worldX * worldY * worldZ * move * view * proj);
-}
-
-XMMATRIX DXCamera::GetWorld(TRANSFORM* transform)
-{
-	//x軸中心回転
-	XMMATRIX worldX = XMMatrixRotationX(transform->Rotation.y);
-	//y軸中心回転
-	XMMATRIX worldY = XMMatrixRotationY(transform->Rotation.x);
-	//z軸中心回転
-	XMMATRIX worldZ = XMMatrixRotationZ(transform->Rotation.z);
-	//移動計算
-	XMMATRIX move = XMMatrixTranslation(transform->Position.x, transform->Position.y, transform->Position.z);
-	//スケール計算
-	XMMATRIX scale = XMMatrixScalingFromVector(XMVectorSet(transform->Scale.x, transform->Scale.y, transform->Scale.z, 0.0f));
-	return XMMatrixTranspose(scale * worldX * worldY * worldZ * move);
-}
-
-XMVECTOR DXCamera::WorldToScreenPoint(TRANSFORM* transform)
-{
-	auto vector = XMVectorSet(transform->Position.x, transform->Position.y, transform->Position.z, 1.0f);
-	auto screen = XMVector3Transform(vector, mMatrix);
-	return screen;
-}
-
-//画面比率とカメラのパラメータを設定する
-void DXCamera::SetEyeParamWithRatio(XMVECTOR pos, XMVECTOR lookup, XMVECTOR up, float ratio)
-{
-	mParam.mPos = pos;
-	mParam.mLookup = lookup;
-	mParam.mUp = up;
-	mParam.mRatio = ratio;
-}
-//カメラを回す
-void DXCamera::SetRotation(float x, float y)
-{
-	mParam.mXRote = x;
-	mParam.mYRote = y;
-}
-//カメラの位置を動かす
-void DXCamera::SetPos(float x, float y, float z)
-{
-	mParam.mPos += XMVectorSet(x, y, z,0.0f);
 }

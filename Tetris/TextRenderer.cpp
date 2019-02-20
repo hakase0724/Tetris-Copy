@@ -51,7 +51,6 @@ void TextRenderer::CreateText(const wchar_t * text,float xOffset, float yOffset,
 
 void TextRenderer::Render()
 {
-	auto cameraParam = mDXCamera->GetCameraParam();
 	cTextureBuffer.mWVP = mDXCamera->GetDXCameraParam(&mTransform);
 	cTextureBuffer.mColor = XMVectorSet(mColor.r, mColor.g, mColor.b, mColor.a);
 	//ƒf[ƒ^‚ğ“n‚·

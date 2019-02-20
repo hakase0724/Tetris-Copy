@@ -7,25 +7,25 @@ FPSCountor::FPSCountor(unsigned int smp)
 	//サンプル数の設定
 	SetSampleNum(smp);
 	//計測する時計の選択
-	if (QueryPerformanceCounter(&m_Counter) != 0)
+	if (QueryPerformanceCounter(&mCounter) != 0)
 	{
 		//QueryPerformanceCounter関数を使うフラグ
-		m_iCounterFlag = FPSCOUNTER_QUERYPER_COUNTER;
+		mCounterFlg = FPSCOUNTER_QUERYPER_COUNTER;
 		//生成時の時刻（クロック数）を取得
-		m_OldLongCount = m_Counter.QuadPart;        
+		mBeforeClockCount = mCounter.QuadPart;        
 		LARGE_INTEGER Freq;
 		//1秒当たりクロック数を取得
 		QueryPerformanceFrequency(&Freq);            
-		m_dFreq = (double)Freq.QuadPart;
+		mFreq = (double)Freq.QuadPart;
 	}
 	else
 	{
 		//timeGetTime関数を使うフラグ
-		m_iCounterFlag = FPSCOUNTER_TIMEGETTIME;
+		mCounterFlg = FPSCOUNTER_TIMEGETTIME;
 		//精度を上げる
 		timeBeginPeriod(1);
 		//生成時の時刻（ミリ秒）を取得
-		m_dwTGTOldCount = timeGetTime();
+		mBeforeMillSecond = timeGetTime();
 	}
 }
 
@@ -33,7 +33,7 @@ FPSCountor::FPSCountor(unsigned int smp)
 FPSCountor::~FPSCountor()
 {
 	//タイマーの精度を戻す
-	if (m_iCounterFlag == FPSCOUNTER_TIMEGETTIME)
+	if (mCounterFlg == FPSCOUNTER_TIMEGETTIME)
 		timeEndPeriod(1);    
 }
 
@@ -48,42 +48,42 @@ double FPSCountor::GetFPS()
 void FPSCountor::SetSampleNum(unsigned int smp)
 {
 	//平均を計算する個数
-	m_uiNum = smp; 
+	mTimeDataCount = smp; 
 	//リスト初期化
-	m_dwDefTimeLst.resize(m_uiNum, 0.0);    
-	m_dwSumTimes = 0;
+	mTimeList.resize(mTimeDataCount, 0.0);    
+	mSumTimes = 0;
 }
 
 double FPSCountor::GetCurDefTime()
 {
 	//差分時間を計測
-	if (m_iCounterFlag == FPSCOUNTER_QUERYPER_COUNTER)
+	if (mCounterFlg == FPSCOUNTER_QUERYPER_COUNTER)
 	{
 		//QueryPerformanceCounter関数による計測
-		QueryPerformanceCounter(&m_Counter);
-		LONGLONG LongDef = m_Counter.QuadPart - m_OldLongCount;
+		QueryPerformanceCounter(&mCounter);
+		LONGLONG LongDef = mCounter.QuadPart - mBeforeClockCount;
 		double dDef = (double)LongDef;
-		m_OldLongCount = m_Counter.QuadPart;
-		return dDef * 1000 / m_dFreq;
+		mBeforeClockCount = mCounter.QuadPart;
+		return dDef * 1000 / mFreq;
 	}
 	//timeGetTime関数による計測
 	DWORD CurTime = timeGetTime();
-	DWORD CurDef = CurTime - m_dwTGTOldCount;
-	m_dwTGTOldCount = CurTime;
+	DWORD CurDef = CurTime - mBeforeMillSecond;
+	mBeforeMillSecond = CurTime;
 	return CurDef;
 }
 
 double FPSCountor::UpdateFPS(double Def)
 {
 	//最も古いデータを消去
-	m_dwDefTimeLst.pop_front();
+	mTimeList.pop_front();
 	//新しいデータを追加
-	m_dwDefTimeLst.push_back(Def);
+	mTimeList.push_back(Def);
 	//FPS算出
 	double FPS;
-	double AveDef = (m_dwSumTimes + Def) / m_uiNum;
+	double AveDef = (mSumTimes + Def) / mTimeDataCount;
 	if (AveDef != 0) FPS = 1000.0 / AveDef;
 	//共通加算部分の更新
-	m_dwSumTimes += Def - *m_dwDefTimeLst.begin();
+	mSumTimes += Def - *mTimeList.begin();
 	return FPS;
 }

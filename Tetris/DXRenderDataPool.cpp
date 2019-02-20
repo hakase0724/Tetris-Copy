@@ -61,14 +61,14 @@ TEXTURE_DATA * DXRenderDataPool::GetTexture(wchar_t * fileName)
 
 TEXTURE_DATA * DXRenderDataPool::GetFontTexture(wchar_t * text, WCHAR* fontName)
 {
+	//キャッシュを探す
 	TEXTURE_DATA* pReturn = FindTextureData(*text);
 	if (pReturn != nullptr) return pReturn;
-
+	//なければ作る
 	auto pData = std::make_unique<TEXTURE_DATA>();
 
 	// フォントハンドルの生成
-	int fontSize = 64;
-	int fontWeight = 1000;
+	auto fontSize = 64;
 	LOGFONT lf =
 	{
 		fontSize, 0, 0, 0, 0, 0, 0, 0,

@@ -16,6 +16,51 @@
     <Filter Include="ヘッダー ファイル\HeaderOnly">
       <UniqueIdentifier>{e38c1e81-0072-4c52-b666-56b2d8751faf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="TetriMino">
+      <UniqueIdentifier>{bcd5aaf7-3d4b-49f4-aeb5-08a07dcc462a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TetriMino\cpp">
+      <UniqueIdentifier>{766c3d5d-e048-4b90-beb7-edd8b0701915}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TetriMino\h">
+      <UniqueIdentifier>{e1c174ec-1de9-40eb-8f2f-3b3b0275f40e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DirectX">
+      <UniqueIdentifier>{548b41bd-ee62-46d0-9d93-cd384cdc7181}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DirectX\cpp">
+      <UniqueIdentifier>{0f5e461c-87b4-4e3b-be6c-b0b5c0e12285}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DirectX\h">
+      <UniqueIdentifier>{9af78fc9-9e36-47ae-acde-7f867a4e1af1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Rendering">
+      <UniqueIdentifier>{3d63e3d7-4ad2-44d5-80df-363a31dd65fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Rendering\cpp">
+      <UniqueIdentifier>{399ad72a-c48c-4ed2-a217-7e9fcf358d14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Rendering\h">
+      <UniqueIdentifier>{212e722e-60a7-41ae-ae77-c4ae6113b599}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{6cffb888-f0b8-451e-8723-b1b512b7d5a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\cpp">
+      <UniqueIdentifier>{dd7371a5-6f76-47a9-9732-8e53af3ef4fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\h">
+      <UniqueIdentifier>{30bf4234-45ad-4d90-9611-d9402e10ff8b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utility">
+      <UniqueIdentifier>{3eace6b8-f95f-431e-934d-aae9a0339748}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utility\cpp">
+      <UniqueIdentifier>{ac316a7a-52ce-4b09-9348-aaebbd212661}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utility\h">
+      <UniqueIdentifier>{fa286a8b-6015-4786-af46-3e7e17e483c0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -45,87 +90,6 @@
     <ClInclude Include="dinputex.h">
       <Filter>ヘッダー ファイル\HeaderOnly</Filter>
     </ClInclude>
-    <ClInclude Include="DXCamera.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="FPSCountor.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="DXGameManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="DXInput.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="DXManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="DXRenderDataPool.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="DXResourceManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="DXSound.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="DXText.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="DXTexture.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="IComponent.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="MeshFactory.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="MeshInfo.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="MeshRenderer.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="ShaderFactory.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="ShaderInfo.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="TextRenderer.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="TextureMesh.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="TextureRenderer.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="TextureShader.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="DXFactory.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="DirLoder.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="DXGameObject.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="TitleScene.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="DXExcuter.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayScene.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="MeshAndShader.h">
       <Filter>ヘッダー ファイル\HeaderOnly</Filter>
     </ClInclude>
@@ -135,58 +99,127 @@
     <ClInclude Include="ReactiveProperty.h">
       <Filter>ヘッダー ファイル\HeaderOnly</Filter>
     </ClInclude>
-    <ClInclude Include="InitPrimitiveDataType.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Mover.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="FuctionCountTimer.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="FieldManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Piece.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="CommandInputer.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="TetriMino.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="TetriMinoMove.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="TetriMinoController.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="TetriMinoRotation.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="TetriMinoHold.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="ScoreManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="TetriMinoNext.h">
+    <ClInclude Include="LightMove.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="TetriMino.h">
+      <Filter>TetriMino\h</Filter>
+    </ClInclude>
+    <ClInclude Include="TetriMinoController.h">
+      <Filter>TetriMino\h</Filter>
+    </ClInclude>
+    <ClInclude Include="TetriMinoHold.h">
+      <Filter>TetriMino\h</Filter>
+    </ClInclude>
+    <ClInclude Include="TetriMinoMove.h">
+      <Filter>TetriMino\h</Filter>
+    </ClInclude>
+    <ClInclude Include="TetriMinoNext.h">
+      <Filter>TetriMino\h</Filter>
     </ClInclude>
     <ClInclude Include="TetriMinoNextUI.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>TetriMino\h</Filter>
     </ClInclude>
-    <ClInclude Include="TetriMinoGhost.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="TetriMinoRotation.h">
+      <Filter>TetriMino\h</Filter>
     </ClInclude>
-    <ClInclude Include="Timer.h">
-      <Filter>ヘッダー ファイル\HeaderOnly</Filter>
+    <ClInclude Include="DXCamera.h">
+      <Filter>DirectX\h</Filter>
+    </ClInclude>
+    <ClInclude Include="DXExcuter.h">
+      <Filter>DirectX\h</Filter>
+    </ClInclude>
+    <ClInclude Include="DXFactory.h">
+      <Filter>DirectX\h</Filter>
+    </ClInclude>
+    <ClInclude Include="DXGameManager.h">
+      <Filter>DirectX\h</Filter>
+    </ClInclude>
+    <ClInclude Include="DXGameObject.h">
+      <Filter>DirectX\h</Filter>
+    </ClInclude>
+    <ClInclude Include="DXInput.h">
+      <Filter>DirectX\h</Filter>
+    </ClInclude>
+    <ClInclude Include="DXManager.h">
+      <Filter>DirectX\h</Filter>
+    </ClInclude>
+    <ClInclude Include="DXRenderDataPool.h">
+      <Filter>DirectX\h</Filter>
+    </ClInclude>
+    <ClInclude Include="DXResourceManager.h">
+      <Filter>DirectX\h</Filter>
+    </ClInclude>
+    <ClInclude Include="DXSound.h">
+      <Filter>DirectX\h</Filter>
     </ClInclude>
     <ClInclude Include="DXSoundManager.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>DirectX\h</Filter>
     </ClInclude>
-    <ClInclude Include="LightMove.h">
+    <ClInclude Include="DXText.h">
+      <Filter>DirectX\h</Filter>
+    </ClInclude>
+    <ClInclude Include="DXTexture.h">
+      <Filter>DirectX\h</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshFactory.h">
+      <Filter>Rendering\h</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshInfo.h">
+      <Filter>Rendering\h</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshRenderer.h">
+      <Filter>Rendering\h</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderFactory.h">
+      <Filter>Rendering\h</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderInfo.h">
+      <Filter>Rendering\h</Filter>
+    </ClInclude>
+    <ClInclude Include="TextRenderer.h">
+      <Filter>Rendering\h</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureMesh.h">
+      <Filter>Rendering\h</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureRenderer.h">
+      <Filter>Rendering\h</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureShader.h">
+      <Filter>Rendering\h</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayScene.h">
+      <Filter>Scene\h</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Scene\h</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleScene.h">
+      <Filter>Scene\h</Filter>
+    </ClInclude>
+    <ClInclude Include="DirLoder.h">
+      <Filter>Utility\h</Filter>
+    </ClInclude>
+    <ClInclude Include="FPSCountor.h">
+      <Filter>Utility\h</Filter>
+    </ClInclude>
+    <ClInclude Include="FuctionCountTimer.h">
+      <Filter>Utility\h</Filter>
+    </ClInclude>
+    <ClInclude Include="InitPrimitiveDataType.h">
+      <Filter>Utility\h</Filter>
+    </ClInclude>
+    <ClInclude Include="Component.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
@@ -197,128 +230,119 @@
     <ClCompile Include="Tetris.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="DXCamera.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="FPSCountor.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="DXGameManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="DXInput.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="DXManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="DXRenderDataPool.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="DXResourceManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="DXSound.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="DXText.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="DXTexture.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="MeshFactory.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="MeshRenderer.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ShaderFactory.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="TextRenderer.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="TextureMesh.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="TextureRenderer.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="TextureShader.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="DXFactory.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="DirLoder.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="DXGameObject.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="TitleScene.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="DXExcuter.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayScene.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="InitPrimitiveDataType.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Mover.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="FuctionCountTimer.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="FieldManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Piece.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="CommandInputer.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="TetriMino.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="TetriMinoMove.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="TetriMinoController.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="TetriMinoRotation.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="TetriMinoHold.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="ScoreManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="TetriMinoNext.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="TetriMinoNextUI.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="TetriMinoGhost.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="DXSoundManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="LightMove.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="TetriMino.cpp">
+      <Filter>TetriMino\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="TetriMinoController.cpp">
+      <Filter>TetriMino\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="TetriMinoHold.cpp">
+      <Filter>TetriMino\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="TetriMinoMove.cpp">
+      <Filter>TetriMino\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="TetriMinoNext.cpp">
+      <Filter>TetriMino\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="TetriMinoNextUI.cpp">
+      <Filter>TetriMino\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="TetriMinoRotation.cpp">
+      <Filter>TetriMino\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="DXCamera.cpp">
+      <Filter>DirectX\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="DXExcuter.cpp">
+      <Filter>DirectX\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="DXFactory.cpp">
+      <Filter>DirectX\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="DXGameManager.cpp">
+      <Filter>DirectX\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="DXGameObject.cpp">
+      <Filter>DirectX\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="DXInput.cpp">
+      <Filter>DirectX\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="DXManager.cpp">
+      <Filter>DirectX\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="DXRenderDataPool.cpp">
+      <Filter>DirectX\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="DXResourceManager.cpp">
+      <Filter>DirectX\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="DXSound.cpp">
+      <Filter>DirectX\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="DXSoundManager.cpp">
+      <Filter>DirectX\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="DXText.cpp">
+      <Filter>DirectX\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="DXTexture.cpp">
+      <Filter>DirectX\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshFactory.cpp">
+      <Filter>Rendering\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshRenderer.cpp">
+      <Filter>Rendering\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderFactory.cpp">
+      <Filter>Rendering\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="TextRenderer.cpp">
+      <Filter>Rendering\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureMesh.cpp">
+      <Filter>Rendering\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureRenderer.cpp">
+      <Filter>Rendering\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureShader.cpp">
+      <Filter>Rendering\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayScene.cpp">
+      <Filter>Scene\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Scene\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleScene.cpp">
+      <Filter>Scene\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="DirLoder.cpp">
+      <Filter>Utility\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="FPSCountor.cpp">
+      <Filter>Utility\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="FuctionCountTimer.cpp">
+      <Filter>Utility\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="InitPrimitiveDataType.cpp">
+      <Filter>Utility\cpp</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -337,5 +361,8 @@
   <ItemGroup>
     <None Include="Shader\TextureShader.hlsl" />
     <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram2.cd" />
+    <None Include="ClassDiagram3.cd" />
   </ItemGroup>
 </Project>

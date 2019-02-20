@@ -12,7 +12,6 @@ DXGameObject::DXGameObject(DXResourceManager* manager)
 	mTransform->Scale = XMFLOAT3(1.0f, 1.0f, 1.0f);
 	mDXResourceManager = manager;
 	mDXManager = mDXResourceManager->GetDXManager();
-	mDXInput = mDXManager->GetDXInput();
 	mDXCamera = mDXManager->GetDXCamera();
 	mName = "GameObject";
 }
@@ -34,7 +33,6 @@ void DXGameObject::RemoveComponent(Component * com)
 HRESULT DXGameObject::Init(DXManager * dxManager)
 {
 	mDXManager = dxManager;
-	mDXInput = mDXManager->GetDXInput();
 	mDXCamera = mDXManager->GetDXCamera();
 	return S_OK;
 }
@@ -91,28 +89,6 @@ void DXGameObject::Exit()
 		auto pItr = *itr;
 		pItr->Exit();
 		delete pItr;
-	}
-}
-
-//Õ“Ë‚µ‚½Žž‚Ìˆ—
-void DXGameObject::OnCollisionEnter2D(Collider2D* col)
-{
-	for (auto itr = mComponentsList.begin(); itr != mComponentsList.end(); ++itr)
-	{
-		auto pItr = *itr;
-		if (!pItr->GetEnable())continue;
-		pItr->OnCollisionEnter2D(col);
-	}
-}
-
-//Õ“Ë‚ªI‚í‚Á‚½Žž‚Ìˆ—
-void DXGameObject::OnCollisionExit2D(Collider2D* col)
-{
-	for (auto itr = mComponentsList.begin(); itr != mComponentsList.end(); ++itr)
-	{
-		auto pItr = *itr;
-		if (!pItr->GetEnable())continue;
-		pItr->OnCollisionExit2D(col);
 	}
 }
 

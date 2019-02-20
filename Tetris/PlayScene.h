@@ -23,9 +23,10 @@ namespace MyDirectX
 		virtual void SceneEnd() override;
 		virtual bool IsSceneEnd() override;
 	private:
+		//エフェクト待機フレーム
 		const int cWaitFrame = 60;
+		//待機を始めたフレーム数を格納するための変数
 		int mWaitStartFrame;
-		int GetRandRange(int min, int max);
 		//UI要素生成
 		void CreateUIItem();
 		//フレーム計測用
@@ -34,7 +35,9 @@ namespace MyDirectX
 		const int FPS_CHEACK_FRAME_COUNT = 60;
 		//FPS表示テキスト
 		DXText* mFPSText;
+		//Tスピン時に表示するUI
 		DXGameObject* mTspinUI;
+		//Tスピンミニ時に表示するUI
 		DXGameObject* mTspinMiniUI;
 		//シーン開始時にアクティブにするオブジェクト
 		std::vector<DXGameObject*> mAwakeObject;
@@ -42,14 +45,19 @@ namespace MyDirectX
 		std::unique_ptr<FieldManager> mFieldManager;
 		//盤面操作
 		std::unique_ptr<TetriMinoController> mTetriMinoController;
+		//スコア管理
 		std::unique_ptr<ScoreManager> mScoreManager;
+		//Next表示
 		std::unique_ptr<TetriMinoNext> mNext;
 		//エイリアステンプレートを使って名前を短縮
 		using Property = ReactiveProperty<double>;
 		//FPS表示に使う変数
 		std::unique_ptr<Property, Deleter> mFPSRP;
+		//BGM
 		DXSound* mBGM;
+		//消去時の音
 		DXSound* mDeleteSound;
+		//今現在のプレイシーンの状態
 		PlaySceneState mState = Play;
 	};
 }

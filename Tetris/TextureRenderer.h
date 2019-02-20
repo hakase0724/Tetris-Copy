@@ -13,6 +13,7 @@ namespace MyDirectX
 		virtual void Render() override;
 		virtual void Exit() override;
 	private:
+		//定数バッファ
 		TEXTURE_CONSTANT_BUFFER cTextureBuffer;
 		//テクスチャリソースのポインタ
 		ID3D11Resource* mTexture;

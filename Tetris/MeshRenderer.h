@@ -2,7 +2,7 @@
 #include <d3d11.h>
 #include <typeinfo>
 #include "DXManager.h"
-#include "IComponent.h"
+#include "Component.h"
 #include "DXGameObject.h"
 #include "MeshAndShader.h"
 #include "DXRenderDataPool.h"
@@ -21,14 +21,10 @@ namespace MyDirectX
 		void SetColor(float r, float g, float b, float a);
 		void SetColor(COLOR color) { SetColor(color.r, color.g, color.b, color.a); }
 		void SetColor();
-		void SetHitColor(float r, float g, float b, float a);
-		void SetHitColor(COLOR color) { SetHitColor(color.r, color.g, color.b, color.a); }
 		virtual void Initialize(DXGameObject* gameObject) override;
 		virtual void Initialize() override;
 		virtual void Render() override;
 		virtual void Exit() override;
-		virtual void OnCollisionEnter2D(Collider2D* col) override;
-		virtual void OnCollisionExit2D(Collider2D* col) override;
 		void SetAlphaBlendingFlg(bool flg) { mIsAlphaBlending = flg; }
 		//メッシュを作る
 		template <typename T>
@@ -42,15 +38,6 @@ namespace MyDirectX
 		//描画色
 		COLOR mColor;
 		COLOR mDefaultColor;
-		COLOR mHitColor;
-		//赤
-		float r;
-		//緑
-		float g;
-		//青
-		float b;
-		//透明度
-		float a;
 		//自身が保持するデータ
 		DXManager* mDXManager;
 		DXCamera* mDXCamera;

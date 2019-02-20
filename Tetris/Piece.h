@@ -1,5 +1,5 @@
 #pragma once
-#include "IComponent.h"
+#include "Component.h"
 #include "MyEnums.h"
 #include "DXTexture.h"
 #include "DXText.h"

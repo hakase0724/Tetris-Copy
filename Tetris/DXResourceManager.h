@@ -32,17 +32,16 @@ namespace MyDirectX
 		//FPSを計算する
 		void UpdateFPS() { mFPS = mFPSCountor->GetFPS(); }
 		void SetVsyncIntarval(int intarval) { mDXManager->SetVsyncIntarval(intarval); }
-		void SetScore(float score) { mScore = score; }
-		float GetScore() const { return mScore; }
 	private:
 		//FPS計算結果を保持
 		double mFPS;
-		float mScore;
 		//生成したオブジェクト数
 		UINT mGameObjectCount;
-		//各種機能クラス
+		//FPS計測クラス
 		std::unique_ptr<FPSCountor> mFPSCountor;
+		//DirectXリソース生成管理クラス
 		std::unique_ptr<DXManager> mDXManager;
+		//音管理クラス
 		std::unique_ptr<DXSoundManager> mDXSoundManager;
 	};
 }

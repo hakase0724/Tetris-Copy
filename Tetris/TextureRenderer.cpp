@@ -18,7 +18,6 @@ void TextureRenderer::Initialize(DXGameObject * gameObject)
 	mDefaultColor.b = 1;
 	mDefaultColor.a = 1;
 	mColor = mDefaultColor;
-	mHitColor.SetBlack();
 	//サンプラーデスク作成
 	D3D11_SAMPLER_DESC smpDesc;
 	::ZeroMemory(&smpDesc, sizeof(D3D11_SAMPLER_DESC));
@@ -51,7 +50,6 @@ void TextureRenderer::LoadTexture(wchar_t * fileName)
 void TextureRenderer::Render()
 {
 	auto transform = mGameObject->GetTransform();
-	auto cameraParam = mDXCamera->GetCameraParam();
 	cTextureBuffer.mWVP = mDXCamera->GetDXCameraParam(transform);
 	cTextureBuffer.mColor = XMVectorSet(mColor.r, mColor.g, mColor.b, mColor.a);
 	//データを渡す

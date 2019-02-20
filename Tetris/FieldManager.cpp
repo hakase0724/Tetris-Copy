@@ -13,20 +13,6 @@ FieldManager::FieldManager(Scene* scene)
 {
 	mScene = scene;
 
-	mOneLineEffect = mScene->Instantiate();
-	auto lightTex = mOneLineEffect->AddComponent<DXTexture>();
-	lightTex->SetTexture(_T("Texture/Light.png"));
-	mOneLineEffect->AddComponent<LightMove>();
-	auto renderer = mOneLineEffect->GetComponent<TextureRenderer>();
-	renderer->SetAlphaBlendingFlg(true);
-
-	mOneLineEffect2 = mScene->Instantiate();
-	auto lightTex2 = mOneLineEffect2->AddComponent<DXTexture>();
-	lightTex2->SetTexture(_T("Texture/Light.png"));
-	mOneLineEffect2->AddComponent<LightMove>();
-	auto renderer2 = mOneLineEffect2->GetComponent<TextureRenderer>();
-	renderer2->SetAlphaBlendingFlg(true);
-
 	mLevelUI = mScene->Instantiate();
 	mLevelUIText = mLevelUI->AddComponent<DXText>();
 	auto levelUITransform = mLevelUI->GetTransform();
@@ -86,6 +72,21 @@ FieldManager::FieldManager(Scene* scene)
 		mPieces.push_back(pieces);
 		mDropCounts.push_back(counts);
 	}
+
+
+	mOneLineEffect = mScene->Instantiate();
+	auto lightTex = mOneLineEffect->AddComponent<DXTexture>();
+	lightTex->SetTexture(_T("Texture/Light.png"));
+	mOneLineEffect->AddComponent<LightMove>();
+	auto renderer = mOneLineEffect->GetComponent<TextureRenderer>();
+	renderer->SetAlphaBlendingFlg(true);
+
+	mOneLineEffect2 = mScene->Instantiate();
+	auto lightTex2 = mOneLineEffect2->AddComponent<DXTexture>();
+	lightTex2->SetTexture(_T("Texture/Light.png"));
+	mOneLineEffect2->AddComponent<LightMove>();
+	auto renderer2 = mOneLineEffect2->GetComponent<TextureRenderer>();
+	renderer2->SetAlphaBlendingFlg(true);
 }
 
 void FieldManager::UpdatePiece(int i, int j, PieceState state, PieceColor color)

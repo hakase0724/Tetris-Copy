@@ -1,5 +1,5 @@
 #pragma once
-#include "IComponent.h"
+#include "Component.h"
 #include <d3d11.h>
 #include "DXManager.h"
 #include "MeshAndShader.h"

@@ -25,11 +25,11 @@ namespace MyDirectX
 		bool MoveTetriMinoSafe(int rowMove, int columnMove);
 		//右回転
 		bool RightRotation();
-		//失敗した場合逆移動する
+		//失敗した場合逆回転する
 		bool RightRotationSafe();
 		//左回転
 		bool LeftRotation();
-		//失敗した場合逆移動する
+		//失敗した場合逆回転する
 		bool LeftRotationSafe();
 		//プレイヤーが操作するテトリミノをセットする
 		//row = 行番号
@@ -54,6 +54,7 @@ namespace MyDirectX
 		void SetTetriMinoAction(TetriMinoAction action) { mLastAction = action; }
 		//Tスピンの判定
 		bool GetIsTspin();
+		//Tスピンミニの判定
 		bool GetIsTspinMini();
 		
 	private:
@@ -87,9 +88,9 @@ namespace MyDirectX
 		TetriMinoAction mLastAction;
 		//保有するピース
 		//0番目が中心
-		PiecePosition mPiecePositions[4];
+		PIECE_POSITION mPiecePositions[4];
 		//ゴーストの位置
-		PiecePosition mGhostPositions[4];
+		PIECE_POSITION mGhostPositions[4];
 		//着地しているか
 		bool mIsLanding = false;
 		//着地経過フレーム

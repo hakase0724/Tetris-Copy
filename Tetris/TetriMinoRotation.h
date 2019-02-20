@@ -18,7 +18,7 @@ namespace MyDirectX
 		DXResourceManager* mManager;
 		TetriMino* mTetriMino;
 		SuperRotationState mSuperRotationState;
-		PiecePosition mMovePosition;
+		PIECE_POSITION mMovePosition;
 		TetriMinoType mTetriMinoType;
 		DXSound* mRotationSE;
 	};

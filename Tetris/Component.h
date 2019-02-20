@@ -8,38 +8,11 @@ namespace MyDirectX
 {
 	class DXGameObject;
 	class Collider2D;
-	//コンポーネントのインターフェイス
-	class IComponent
-	{
-	public:
-		virtual void Initialize(DXGameObject* gameObject) = 0;
-		virtual void Initialize() = 0;
-		virtual void Update() = 0;
-		virtual void LateUpdate() = 0;
-		virtual void Render() = 0;
-		virtual void Exit() = 0;
-		virtual void OnCollisionEnter2D(Collider2D* col) = 0;
-		virtual void OnCollisionExit2D(Collider2D* col) = 0;
-		virtual void OnEnable() = 0;
-		virtual void OnDisable() = 0;
-		virtual std::string GetName() = 0;
-		virtual UINT GetID() = 0;
-		virtual ~IComponent() = 0 {};
-	};
-
-	class IHP
-	{
-	public:
-		virtual void SetHP(double hp) = 0;
-		virtual double GetHP() = 0;
-		virtual double GetMaxHP() = 0;
-		virtual void Damage(double damage) = 0;
-	};
 
 	//コンポーネントクラス
 	//このクラスを継承したクラスをDXGameObjectに追加していく
 	//C++では抽象クラスをtemplateに渡すことができないらしいのでこのクラスを渡す
-	class Component:public IComponent
+	class Component
 	{
 	public:
 		//初期化処理
@@ -52,9 +25,6 @@ namespace MyDirectX
 		virtual void Render() {};
 		//解放処理
 		virtual void Exit() {};
-		//衝突の処理
-		virtual void OnCollisionEnter2D(Collider2D* col) {};
-		virtual void OnCollisionExit2D(Collider2D* col) {};
 		virtual void OnEnable() {};
 		virtual void OnDisable() {};
 		std::string GetName() { return mName; }

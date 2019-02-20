@@ -154,7 +154,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="AlignedAllocationPolicy.h" />
-    <ClInclude Include="CommandInputer.h" />
     <ClInclude Include="CommonValues.h" />
     <ClInclude Include="dinputex.h" />
     <ClInclude Include="DirLoder.h" />
@@ -174,14 +173,13 @@
     <ClInclude Include="FieldManager.h" />
     <ClInclude Include="FPSCountor.h" />
     <ClInclude Include="FuctionCountTimer.h" />
-    <ClInclude Include="IComponent.h" />
+    <ClInclude Include="Component.h" />
     <ClInclude Include="InitPrimitiveDataType.h" />
     <ClInclude Include="LightMove.h" />
     <ClInclude Include="MeshAndShader.h" />
     <ClInclude Include="MeshFactory.h" />
     <ClInclude Include="MeshInfo.h" />
     <ClInclude Include="MeshRenderer.h" />
-    <ClInclude Include="Mover.h" />
     <ClInclude Include="MyEnums.h" />
     <ClInclude Include="MyStructs.h" />
     <ClInclude Include="Piece.h" />
@@ -197,7 +195,6 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TetriMino.h" />
     <ClInclude Include="TetriMinoController.h" />
-    <ClInclude Include="TetriMinoGhost.h" />
     <ClInclude Include="TetriMinoHold.h" />
     <ClInclude Include="TetriMinoMove.h" />
     <ClInclude Include="TetriMinoNext.h" />
@@ -208,11 +205,9 @@
     <ClInclude Include="TextureMesh.h" />
     <ClInclude Include="TextureRenderer.h" />
     <ClInclude Include="TextureShader.h" />
-    <ClInclude Include="Timer.h" />
     <ClInclude Include="TitleScene.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CommandInputer.cpp" />
     <ClCompile Include="DirLoder.cpp" />
     <ClCompile Include="DXCamera.cpp" />
     <ClCompile Include="DXExcuter.cpp" />
@@ -234,7 +229,6 @@
     <ClCompile Include="LightMove.cpp" />
     <ClCompile Include="MeshFactory.cpp" />
     <ClCompile Include="MeshRenderer.cpp" />
-    <ClCompile Include="Mover.cpp" />
     <ClCompile Include="Piece.cpp" />
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="Scene.cpp" />
@@ -248,7 +242,6 @@
     </ClCompile>
     <ClCompile Include="TetriMino.cpp" />
     <ClCompile Include="TetriMinoController.cpp" />
-    <ClCompile Include="TetriMinoGhost.cpp" />
     <ClCompile Include="TetriMinoHold.cpp" />
     <ClCompile Include="TetriMinoMove.cpp" />
     <ClCompile Include="TetriMinoNext.cpp" />
@@ -270,6 +263,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram2.cd" />
+    <None Include="ClassDiagram3.cd" />
     <None Include="Shader\TextureShader.hlsl">
       <FileType>Document</FileType>
     </None>

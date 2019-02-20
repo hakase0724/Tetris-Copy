@@ -1,5 +1,5 @@
 #pragma once
-#include "IComponent.h"
+#include "Component.h"
 #include "TextRenderer.h"
 
 namespace MyDirectX
@@ -13,7 +13,9 @@ namespace MyDirectX
 		//表示テキスト更新
 		void UpdateText(const wchar_t* texts);
 	private:
+		//テキストを表示するレンダラー達
 		std::vector<TextRenderer*> mRenderers;
+		//フォント
 		std::wstring mFont = _T("MS P明朝");
 	};
 }

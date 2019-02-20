@@ -5,7 +5,7 @@
 #include <vector> 
 #include <algorithm>
 #include "DXManager.h"
-#include "IComponent.h"
+#include "Component.h"
 #include "MyEnums.h"
 #include "AlignedAllocationPolicy.h"
 #include "DXResourceManager.h"
@@ -33,11 +33,8 @@ namespace MyDirectX
 		template<typename T>
 		void RemoveComponent();
 		void RemoveComponent(Component* com);
-		template<typename T>
-		int GetComponentCount();
 		//ゲッター
 		DXManager* GetDXManager() { return mDXManager; }
-		DXInput* GetDXInput() { return mDXInput; }
 		DXCamera* GetDXCamera() { return mDXCamera; }
 		//自身のtransform情報を更新
 		virtual void SetTransform(TRANSFORM *transform) {/* mTransform = transform;*/ }
@@ -53,11 +50,9 @@ namespace MyDirectX
 		virtual void Render();
 		//自身の解放
 		virtual void Exit();
-		//衝突した時の処理
-		virtual void OnCollisionEnter2D(Collider2D* col);
-		//衝突が終わった時の処理
-		virtual void OnCollisionExit2D(Collider2D* col);
+		//非アクティブからアクティブになったら
 		virtual void OnEnable();
+		//アクティブから非アクティブになったら
 		virtual void OnDisable();
 		//初期位置を設定する
 		void SetDefaultTransform() { mDefaultTransform = *mTransform; }
@@ -108,25 +103,29 @@ namespace MyDirectX
 		Scene* GetScene() const { return mScene; }
 		void SetScene(Scene* scene) { mScene = scene; }
 		//機能クラス
-		void SetDXResourceManager(DXResourceManager* manager) { mDXResourceManager = manager; }
 		DXResourceManager* GetDXResourceManager() const { return mDXResourceManager; }
 	protected:
 		//自身の座標回転スケール
 		std::unique_ptr<TRANSFORM> mTransform;
 		//DirectXのリソース管理クラス
 		DXManager* mDXManager;
-		//DirectInput管理クラス
-		DXInput* mDXInput;
 		//カメラ情報
 		DXCamera* mDXCamera;
+		//DirectXリソース管理クラス
 		DXResourceManager* mDXResourceManager;
 		//自身が持つコンポーネントのリスト
 		std::vector<Component*> mComponentsList;
+		//名前
 		std::string mName;
+		//タグ
 		Tag mTag;
+		//自身を示すユニークID
 		UINT mId;
+		//自身のアクティブ状態
 		bool mEnable;
+		//自身が所属するシーン
 		Scene* mScene;
+		//自身の初期位置
 		TRANSFORM mDefaultTransform;
 	private:
 		//1フレーム前のアクティブ状態
@@ -168,20 +167,6 @@ namespace MyDirectX
 		//消すものは終端に集まってるため後ろから消す
 		mComponentsList.erase(remove, mComponentsList.end());
 	}
-
-	template<typename T>
-	inline int DXGameObject::GetComponentCount()
-	{
-		int count = 0;
-		T* component;
-		for (auto itr = mComponentsList.begin(); itr != mComponentsList.end(); ++itr)
-		{
-			component = dynamic_cast<T*>(*itr);
-			if (component != NULL) count++;
-		}
-		return count;
-	}
-
 }
 
 

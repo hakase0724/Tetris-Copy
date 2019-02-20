@@ -15,22 +15,30 @@ class FPSCountor
 public:
 	FPSCountor(unsigned int smp = 10);
 	~FPSCountor();
-	// FPS値を取得
+	//FPS値を取得
 	double GetFPS();
-	// サンプル数を変更
+	//サンプル数を変更
 	void SetSampleNum(unsigned int smp);
-	// 現在の時刻を取得
+	//現在の時刻を取得
 	double GetCurDefTime();
-	// FPSを更新
+	//FPSを更新
 	double UpdateFPS(double Def);
 private:
-	int m_iCounterFlag;                // 使用する計測関数の判定フラグ
-	LARGE_INTEGER m_Counter;           // クロックカウント数
-	double m_dFreq;                    // 1秒当たりクロックカウント数（周波数）
-	LONGLONG m_OldLongCount;           // 以前のクロックカウント数
-	DWORD m_dwTGTOldCount;             // 以前の時刻（ミリ秒）
-	list<double> m_dwDefTimeLst;       // 時間リスト
-	UINT m_uiNum;                      // 移動平均計算時のデータ数
-	double m_dwSumTimes;               // 共通部分の合計値
+	//使用する計測関数の判定フラグ
+	int mCounterFlg;
+	//クロックカウント数
+	LARGE_INTEGER mCounter;
+	//1秒当たりクロックカウント数（周波数）
+	double mFreq;
+	//以前のクロックカウント数
+	LONGLONG mBeforeClockCount;
+	//以前の時刻（ミリ秒）
+	DWORD mBeforeMillSecond; 
+	//時間リスト
+	list<double> mTimeList;
+	//移動平均計算時のデータ数
+	UINT mTimeDataCount;     
+	//共通部分の合計値
+	double mSumTimes;               
 };
 

@@ -1,5 +1,5 @@
 #pragma once
-#include "IComponent.h"
+#include "Component.h"
 namespace MyDirectX
 {
 	class LightMove :public Component

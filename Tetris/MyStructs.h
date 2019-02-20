@@ -8,7 +8,7 @@
 namespace MyDirectX
 {
 	//ピースの座標
-	struct PiecePosition 
+	struct PIECE_POSITION 
 	{
 		//行
 		int x;

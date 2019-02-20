@@ -26,14 +26,6 @@ void MeshRenderer::SetColor()
 	mColor = mDefaultColor;
 }
 
-void MeshRenderer::SetHitColor(float r, float g, float b, float a)
-{
-	mHitColor.r = r;
-	mHitColor.g = g;
-	mHitColor.b = b;
-	mHitColor.a = a;
-}
-
 void MeshRenderer::Initialize(DXGameObject * gameObject)
 {
 	mDXManager = gameObject->GetDXManager();
@@ -68,14 +60,4 @@ void MeshRenderer::Exit()
 	if (mIndexBuffer)mIndexBuffer->Release();
 	if (mConstantBuffer)mConstantBuffer->Release();
 	if (mRasterizerState)mRasterizerState->Release();
-}
-
-void MeshRenderer::OnCollisionEnter2D(Collider2D* col)
-{
-	SetColor(mHitColor);
-}
-
-void MeshRenderer::OnCollisionExit2D(Collider2D* col)
-{
-	SetColor();
 }

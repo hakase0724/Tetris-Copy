@@ -16,9 +16,13 @@ namespace MyDirectX
 		bool IsHoldLock() { return mIsLockHold; }
 		void UnlockHold() { mIsLockHold = false; }
 	private:
+		//ホールド処理
 		void Hold();
+		//ホールドしているか
 		bool mIsHold = false;
+		//ホールドが制限されているか
 		bool mIsLockHold = false;
+		//最初のホールドか
 		bool mIsFirstHold = false;
 		Scene* mScene;
 		DXResourceManager* mManager;

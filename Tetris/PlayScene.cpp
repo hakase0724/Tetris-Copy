@@ -13,6 +13,8 @@ using namespace MyDirectX;
 
 void PlayScene::Init()
 {
+	//UI要素を作る
+	CreateUIItem();
 	//盤面管理
 	mFieldManager = std::make_unique<FieldManager>(this);
 	//スコア管理
@@ -21,8 +23,8 @@ void PlayScene::Init()
 	mNext = std::make_unique<TetriMinoNext>(this);
 	//テトリミノ操作
 	mTetriMinoController = std::make_unique<TetriMinoController>(mDXRescourceManager,mFieldManager.get(),this);
-
-	CreateUIItem();
+	
+	
 	//全てのオブジェクトの初期位置を設定する
 	for(auto &game: mGameObjectsList)
 	{
@@ -142,30 +144,10 @@ void PlayScene::SceneUpdate()
 
 void PlayScene::SceneEnd()
 {
-	//mDXRescourceManager->SetScore((float)mScoreRP->GetValue());
 	//全てのオブジェクトのアクティブを切る
 	for (auto &game : mGameObjectsList)
 	{
 		game->SetEnable(false);
-	}
-	//アイテムのアクティブを切る
-	for(auto &game :mGameObjectsList)
-	{
-		if(game->GetTag() == StaticInstantiateItem)
-		{
-			game->SetEnable(false);
-		}
-	}
-	//動的生成アイテムがあれば削除
-	for (auto itr = mGameObjectsList.begin(); itr != mGameObjectsList.end();)
-	{
-		if (itr->get()->GetTag() == DynamicInstantiateItem)
-		{
-			itr->reset();
-			itr = mGameObjectsList.erase(itr);
-			continue;
-		}
-		else ++itr;
 	}
 	//曲を止める
 	mBGM->Stop();
@@ -174,25 +156,12 @@ void PlayScene::SceneEnd()
 bool PlayScene::IsSceneEnd()
 {
 	if (mTetriMinoController->IsGameOver()) return true;
-	//if (mDXRescourceManager->GetKeyDown(DIK_RETURN)) return true;
 	return false;
-}
-
-int PlayScene::GetRandRange(int min, int max)
-{
-	//シード値乱数生成器
-	std::random_device rnd;
-	//メルセンヌ・ツイスタ方を使って乱数を作る
-	std::mt19937_64 mt64(rnd());
-	//範囲内の離散分布を作る
-	std::uniform_int_distribution<int> genRandInt(min, max);
-	//分布の中から生成した乱数を使って1つだけ値を取り出す
-	return genRandInt(mt64);
 }
 
 void PlayScene::CreateUIItem()
 {
-	//タイトル
+	//プレイシーン大枠
 	auto layout = Instantiate();
 	auto tex = layout->AddComponent<DXTexture>();
 	tex->SetTexture(_T("Texture/Layout.png"));
@@ -200,7 +169,7 @@ void PlayScene::CreateUIItem()
 	transform->Scale = DirectX::XMFLOAT3(5.5f, 3.0f, 1.0f);
 	mAwakeObject.push_back(layout);
 
-	//タイトル
+	//プレイシーンの盤面
 	auto field = Instantiate();
 	auto tex2 = field->AddComponent<DXTexture>();
 	tex2->SetTexture(_T("Texture/Field.png"));
@@ -211,13 +180,14 @@ void PlayScene::CreateUIItem()
 	transform2->Position.z += 0.01f;
 	mAwakeObject.push_back(field);
 
+	//Tスピンしたとき表示するUI
 	mTspinUI = Instantiate();
 	auto tspinText = mTspinUI->AddComponent<DXText>();
 	auto tspinTransform = mTspinUI->GetTransform();
 	tspinTransform->Scale = DirectX::XMFLOAT3(0.07f,0.07f,1.0f);
 	tspinTransform->Position = DirectX::XMFLOAT3(-1.7f, -0.7f, -1.1f);
 	tspinText->UpdateText(_T("TSpin"));
-
+	//Tスピンミニしたとき表示するUI
 	mTspinMiniUI = Instantiate();
 	auto tspinMiniText = mTspinMiniUI->AddComponent<DXText>();
 	auto tspinMiniTransform = mTspinMiniUI->GetTransform();
