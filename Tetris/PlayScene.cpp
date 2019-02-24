@@ -9,6 +9,7 @@
 #include <chrono>
 #include "LightMove.h"
 
+
 using namespace MyDirectX;
 
 void PlayScene::Init()
@@ -40,11 +41,13 @@ void PlayScene::Init()
 
 void PlayScene::SceneStart()
 {
+	
 	//全てのオブジェクトの初期化
 	for(auto &game:mGameObjectsList)
 	{
 		game->InitializeComponent();
 	}
+	
 	//最初からいるオブジェクトのアクティブ化
 	for(auto game:mAwakeObject)
 	{
@@ -54,7 +57,9 @@ void PlayScene::SceneStart()
 	mFieldManager->Start();
 	mScoreManager->Start();
 	mNext->Start();
+	
 	mTetriMinoController->Start();
+	
 	//最初のテトリミノを出す
 	mTetriMinoController->SetTetriMino(5, 20, mNext->GetNextTetriMino());
 	//曲再生

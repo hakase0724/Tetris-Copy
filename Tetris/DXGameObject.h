@@ -32,12 +32,9 @@ namespace MyDirectX
 		//指定したコンポーネントを消す
 		template<typename T>
 		void RemoveComponent();
-		void RemoveComponent(Component* com);
 		//ゲッター
 		DXManager* GetDXManager() { return mDXManager; }
 		DXCamera* GetDXCamera() { return mDXCamera; }
-		//自身のtransform情報を更新
-		virtual void SetTransform(TRANSFORM *transform) {/* mTransform = transform;*/ }
 		//自身の初期化
 		virtual HRESULT Init(DXManager* dxManager);
 		//自身の持っているコンポーネントの初期化
@@ -135,10 +132,9 @@ namespace MyDirectX
 	template<typename T>
 	inline T * DXGameObject::AddComponent()
 	{
-		T* pReturn = nullptr;
-		//Componentの派生クラスでなければnullを返す
-		if (!typeid(T).before(typeid(Component*))) return pReturn;
-		pReturn = new T();
+		T* pReturn = new T();
+		//Componentでなければコンパイルエラーが起こる
+		Component* com = pReturn;
 		//追加したコンポーネントの初期化処理を呼び出す
 		pReturn->Initialize(this);
 		mComponentsList.push_back(pReturn);

@@ -21,6 +21,9 @@ void Piece::Initialize(DXGameObject* gameObject)
 	debugTransform->Scale = transform->Scale;
 	debugTransform->Position.z -= 0.01f;
 	mDebugText = mDebugTextObject->AddComponent<DXText>();
+
+	mTexture = mGameObject->GetComponent<DXTexture>();
+	mRenderer = mGameObject->GetComponent<TextureRenderer>();
 }
 void Piece::Initialize()
 {
@@ -28,6 +31,7 @@ void Piece::Initialize()
 	if (mIsDebug) mDebugTextObject->SetEnable(true);
 	if (mTexture == nullptr) mTexture = mGameObject->GetComponent<DXTexture>();
 	if (mRenderer == nullptr) mRenderer = mGameObject->GetComponent<TextureRenderer>();
+	SetPieceState(Space);
 }
 void Piece::SetPieceState(PieceState state)
 {
