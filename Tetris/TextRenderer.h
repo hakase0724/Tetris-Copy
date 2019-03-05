@@ -20,7 +20,7 @@ namespace MyDirectX
 			const wchar_t* text,
 			float xOffset = 0.0f,
 			float yOffset = 0.0f,
-			WCHAR* fontName = (WCHAR*)"‚l‚r ‚o–¾’©"		
+			std::wstring fontName = L"‚l‚r ‚o–¾’©"		
 		);
 		virtual void Render() override;
 		virtual void Exit() override;

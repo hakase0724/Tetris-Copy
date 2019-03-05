@@ -33,7 +33,7 @@ void TextRenderer::Initialize(DXGameObject * gameObject)
 	CreateShader<TextureShader>();
 }
 
-void TextRenderer::CreateText(const wchar_t * text,float xOffset, float yOffset, WCHAR * fontName)
+void TextRenderer::CreateText(const wchar_t * text,float xOffset, float yOffset, std::wstring fontName)
 {
 	//const‚ðŠO‚·
 	wchar_t* w = const_cast<wchar_t*>(text);

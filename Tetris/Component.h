@@ -7,11 +7,9 @@
 namespace MyDirectX
 {
 	class DXGameObject;
-	class Collider2D;
 
 	//コンポーネントクラス
 	//このクラスを継承したクラスをDXGameObjectに追加していく
-	//C++では抽象クラスをtemplateに渡すことができないらしいのでこのクラスを渡す
 	class Component
 	{
 	public:

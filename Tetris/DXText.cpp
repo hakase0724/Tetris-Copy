@@ -11,7 +11,7 @@ void DXText::Initialize(DXGameObject * gameObject)
 	mTag = mGameObject->GetTag();
 }
 
-void DXText::UpdateText(const wchar_t * texts)
+void DXText::UpdateText(const wchar_t * texts,std::wstring fontName)
 {
 	//表示文字数
 	auto size = (int)wcslen(texts);
@@ -32,7 +32,7 @@ void DXText::UpdateText(const wchar_t * texts)
 	//文字更新
 	for (int i = 0; i < size; i++)
 	{
-		mRenderers[i]->CreateText(texts, (float)i * offset,0.0f,const_cast<WCHAR*>(mFont.c_str()));
+		mRenderers[i]->CreateText(texts, (float)i * offset,0.0f, fontName);
 		texts++;
 	}
 	//余ってるコンポーネントを空白にする
@@ -40,7 +40,7 @@ void DXText::UpdateText(const wchar_t * texts)
 	{
 		for (int i = size; i < size + abs((int)addRendererNum); i++)
 		{
-			mRenderers[i]->CreateText(L" ", (float)i * offset, 0.0f, const_cast<WCHAR*>(mFont.c_str()));
+			mRenderers[i]->CreateText(L" ", (float)i * offset, 0.0f, fontName);
 		}
 	}
 }

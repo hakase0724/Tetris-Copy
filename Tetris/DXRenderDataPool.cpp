@@ -59,13 +59,14 @@ TEXTURE_DATA * DXRenderDataPool::GetTexture(wchar_t * fileName)
 	return CreateTexture(fileName);
 }
 
-TEXTURE_DATA * DXRenderDataPool::GetFontTexture(wchar_t * text, WCHAR* fontName)
+TEXTURE_DATA * DXRenderDataPool::GetFontTexture(wchar_t * text, std::wstring fontName)
 {
 	//キャッシュを探す
 	TEXTURE_DATA* pReturn = FindTextureData(*text);
 	if (pReturn != nullptr) return pReturn;
 	//なければ作る
 	auto pData = std::make_unique<TEXTURE_DATA>();
+	AddFontResourceEx(_T("APJapanesefont.ttf"), FR_PRIVATE, NULL);
 
 	// フォントハンドルの生成
 	auto fontSize = 64;
@@ -74,8 +75,15 @@ TEXTURE_DATA * DXRenderDataPool::GetFontTexture(wchar_t * text, WCHAR* fontName)
 		fontSize, 0, 0, 0, 0, 0, 0, 0,
 		SHIFTJIS_CHARSET, OUT_TT_ONLY_PRECIS, CLIP_DEFAULT_PRECIS,
 		PROOF_QUALITY, FIXED_PITCH | FF_MODERN,
-		*fontName
 	};
+	//LOGFONT構造体が持つlfFaceName配列にフォント名を格納
+	auto loopCount = 0;
+	//std::wstringは実装的にvectorと大差なくiteratorつかって全走査できる
+	for(auto f:fontName)
+	{
+		lf.lfFaceName[loopCount] = f;
+		loopCount++;
+	}
 	HFONT hFont = CreateFontIndirect(&lf);
 
 	// 現在のウィンドウに適用

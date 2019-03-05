@@ -8,25 +8,32 @@ using namespace MyDirectX;
 
 void TitleScene::Init()
 {
-	line = Instantiate();
-	auto lightTex = line->AddComponent<DXTexture>();
-	lightTex->SetTexture(_T("Texture/Light.png"));
-	line->GetTransform()->Position.z -= 0.1f;
-	line->AddComponent<LightMove>();
-	auto renderer = line->GetComponent<TextureRenderer>();
-	renderer->SetAlphaBlendingFlg(true);
+	//line = Instantiate();
+	//auto lightTex = line->AddComponent<DXTexture>();
+	//lightTex->SetTexture(_T("Texture/Light.png"));
+	//line->GetTransform()->Position.z -= 0.1f;
+	//line->AddComponent<LightMove>();
+	//auto renderer = line->GetComponent<TextureRenderer>();
+	//renderer->SetAlphaBlendingFlg(true);
 
-	//タイトル
-	auto title = Instantiate();
-	auto tex = title->AddComponent<DXTexture>();
-	tex->SetTexture(_T("Texture/Title.png"));
-	auto transform = title->GetTransform();
-	transform->Scale = DirectX::XMFLOAT3(5.5f, 4.0f, 1.0f);
-	transform->Position = DirectX::XMFLOAT3(0.0f,0.3f,0.0f);
-	auto texRenderer = title->GetComponent<TextureRenderer>();
-	texRenderer->SetColor(1.0f, 1.0f, 1.0f, 1.0f);
-	title->SetEnable(true);
+	////タイトル
+	//auto title = Instantiate();
+	//auto tex = title->AddComponent<DXTexture>();
+	//tex->SetTexture(_T("Texture/Title.png"));
+	//auto transform = title->GetTransform();
+	//transform->Scale = DirectX::XMFLOAT3(5.5f, 4.0f, 1.0f);
+	//transform->Position = DirectX::XMFLOAT3(0.0f,0.3f,0.0f);
+	//auto texRenderer = title->GetComponent<TextureRenderer>();
+	//texRenderer->SetColor(1.0f, 1.0f, 1.0f, 1.0f);
+	//title->SetEnable(true);
 
+	auto textObj = Instantiate();
+	auto transform = textObj->GetTransform();
+	transform->Scale = DirectX::XMFLOAT3(0.5f,0.5f,0.5f);
+	auto text = textObj->AddComponent<DXText>();
+	text->UpdateText(_T("TEST"),_T("あんずもじ"));
+	textObj->InitializeComponent();
+	textObj->SetEnable(true);
 	
 
 	//タイトルBGM取得
@@ -37,7 +44,7 @@ void TitleScene::Init()
 
 void TitleScene::SceneStart()
 {
-	mBGM->Play();
+	//mBGM->Play();
 }
 
 void MyDirectX::TitleScene::SceneUpdate()
@@ -53,7 +60,7 @@ bool TitleScene::IsSceneEnd()
 	//エンター押されたら
 	if (mDXRescourceManager->GetKeyDown(DIK_RETURN)) 
 	{
-		mBGM->Stop();
+		//mBGM->Stop();
 		return true;
 	}
 	return false;

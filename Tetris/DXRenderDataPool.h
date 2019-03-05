@@ -11,7 +11,10 @@ namespace MyDirectX
 	{
 	public:
 		DXRenderDataPool(ID3D11Device* device, ID3D11DeviceContext* deviceContext);
-		~DXRenderDataPool() {};
+		~DXRenderDataPool() 
+		{
+			RemoveFontResourceEx(_T("APJapanesefont.ttf"), FR_PRIVATE, NULL);
+		};
 		//メッシュデータを取得
 		template<typename T>
 		T* GetMesh();
@@ -22,7 +25,7 @@ namespace MyDirectX
 		//fileName = テクスチャのファイルパス
 		TEXTURE_DATA* GetTexture(wchar_t* fileName);
 		//文字のテクスチャを取得　なければnullptrを返す
-		TEXTURE_DATA* GetFontTexture(wchar_t* text, WCHAR* fontName = (WCHAR*)L"ＭＳ Ｐ明朝");
+		TEXTURE_DATA* GetFontTexture(wchar_t* text, std::wstring fontName = _T("ＭＳ Ｐ明朝"));
 		
 	private:
 		//テクスチャデータを探す見つからなければnullptrを返す
