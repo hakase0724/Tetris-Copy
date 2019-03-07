@@ -4,6 +4,7 @@
 #include <memory>
 #include <typeinfo>
 #include "DirLoder.h"
+#include <map>
 
 namespace MyDirectX
 {
@@ -32,6 +33,7 @@ namespace MyDirectX
 		//text = 探すデータの名前
 		TEXTURE_DATA* FindTextureData(wchar_t* text);
 		TEXTURE_DATA* FindTextureData(wchar_t text);
+		TEXTURE_DATA* FindFontTextureData(wchar_t text,std::wstring font);
 		//テクスチャを作る
 		//filePath = 読み込むファイルパス
 		TEXTURE_DATA* CreateTexture(std::wstring filePath);
@@ -42,6 +44,7 @@ namespace MyDirectX
 		std::vector<std::unique_ptr<MeshInfo>> mMeshInfoList;
 		std::vector<std::unique_ptr<ShaderInfo>> mShaderInfoList;
 		std::vector<std::unique_ptr<TEXTURE_DATA>> mTextureList;
+		std::map<std::wstring, std::vector<std::unique_ptr<TEXTURE_DATA>>> mFontTextureList;
 	};
 	template<typename T>
 	inline T * DXRenderDataPool::GetMesh()

@@ -16,6 +16,8 @@ DXRenderDataPool::DXRenderDataPool(ID3D11Device * device, ID3D11DeviceContext * 
 	mDirLoder = std::make_unique<DirLoder>();
 	//ディレクトリからテクスチャを読み込む
 	LoadTextureInDir();
+	//使用するフォントがあればここで追加しておく
+	AddFontResourceEx(_T("APJapanesefont.ttf"), FR_PRIVATE, NULL);
 
 	//空白のテクスチャを作る
 	auto pData = std::make_unique<TEXTURE_DATA>();
@@ -62,11 +64,10 @@ TEXTURE_DATA * DXRenderDataPool::GetTexture(wchar_t * fileName)
 TEXTURE_DATA * DXRenderDataPool::GetFontTexture(wchar_t * text, std::wstring fontName)
 {
 	//キャッシュを探す
-	TEXTURE_DATA* pReturn = FindTextureData(*text);
+	TEXTURE_DATA* pReturn = FindFontTextureData(*text,fontName);
 	if (pReturn != nullptr) return pReturn;
 	//なければ作る
 	auto pData = std::make_unique<TEXTURE_DATA>();
-	AddFontResourceEx(_T("APJapanesefont.ttf"), FR_PRIVATE, NULL);
 
 	// フォントハンドルの生成
 	auto fontSize = 64;
@@ -200,7 +201,7 @@ TEXTURE_DATA * DXRenderDataPool::GetFontTexture(wchar_t * text, std::wstring fon
 	pData->texture = fontTexture;
 	pData->fileName = *text;
 	pReturn = pData.get();
-	mTextureList.push_back(std::move(pData));
+	mFontTextureList[fontName].push_back(std::move(pData));
 	return pReturn;
 }
 
@@ -227,6 +228,26 @@ TEXTURE_DATA * DXRenderDataPool::FindTextureData(wchar_t text)
 	for (auto &tex : mTextureList)
 	{
 		if (str == tex.get()->fileName)
+		{
+			pReturn = tex.get();
+			break;
+		}
+	}
+	return pReturn;
+}
+
+TEXTURE_DATA * DXRenderDataPool::FindFontTextureData(wchar_t text, std::wstring font)
+{
+	TEXTURE_DATA* pReturn = nullptr;
+	//該当フォントの配列が無ければ終了
+	if(!mFontTextureList.count(font))
+	{
+		return pReturn;
+	}
+	//テクスチャ情報のキャッシュがあるか
+	for (auto &tex : mFontTextureList[font])
+	{
+		if (text == *tex.get()->fileName.c_str())
 		{
 			pReturn = tex.get();
 			break;

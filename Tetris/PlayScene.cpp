@@ -23,8 +23,7 @@ void PlayScene::Init()
 	//ネクスト表示
 	mNext = std::make_unique<TetriMinoNext>(this);
 	//テトリミノ操作
-	mTetriMinoController = std::make_unique<TetriMinoController>(mDXRescourceManager,mFieldManager.get(),this);
-	
+	mTetriMinoController = std::make_unique<TetriMinoController>(mDXRescourceManager,mFieldManager.get(),this);	
 	
 	//全てのオブジェクトの初期位置を設定する
 	for(auto &game: mGameObjectsList)
@@ -41,7 +40,6 @@ void PlayScene::Init()
 
 void PlayScene::SceneStart()
 {
-	
 	//全てのオブジェクトの初期化
 	for(auto &game:mGameObjectsList)
 	{

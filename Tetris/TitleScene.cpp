@@ -29,11 +29,21 @@ void TitleScene::Init()
 
 	auto textObj = Instantiate();
 	auto transform = textObj->GetTransform();
+	transform->Position = DirectX::XMFLOAT3(-0.5f, 0.0f, 0.0f);
 	transform->Scale = DirectX::XMFLOAT3(0.5f,0.5f,0.5f);
 	auto text = textObj->AddComponent<DXText>();
-	text->UpdateText(_T("TEST"),_T("‚ ‚ñ‚¸‚à‚¶"));
+	text->UpdateText(_T("‚ ‚ñ‚¸‚à‚¶"),_T("‚ ‚ñ‚¸‚à‚¶"));
 	textObj->InitializeComponent();
 	textObj->SetEnable(true);
+
+	auto textObj2 = Instantiate();
+	auto transform2 = textObj2->GetTransform();
+	transform2->Position = DirectX::XMFLOAT3(-0.5f, -0.5f, 0.0f);
+	transform2->Scale = DirectX::XMFLOAT3(0.5f, 0.5f, 0.5f);
+	auto text2 = textObj2->AddComponent<DXText>();
+	text2->UpdateText(_T("‚ ‚ñ‚¸‚à‚¶"), _T("‚l‚r ‚o–¾’©"));
+	textObj2->InitializeComponent();
+	textObj2->SetEnable(true);
 	
 
 	//ƒ^ƒCƒgƒ‹BGMŽæ“¾
